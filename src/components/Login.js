@@ -39,11 +39,24 @@ export default function Login() {
   return (
     <Container>
       <img src={Logo} alt="logo" />
-        <Input type="email" placeholder="email" value={userInfo.email} onChange={e => setUserInfo({...userInfo, email: e.target.value})}></Input>
-        <Input type="password" placeholder="senha" value={userInfo.password} onChange={e => setUserInfo({...userInfo, password: e.target.value})}></Input>
-        <Button type="submit" onClick={handleLogin}>
-            Entrar
-        </Button>
+      <Input 
+        type="email" 
+        placeholder="email" 
+        value={userInfo.email}
+        onChange={e => setUserInfo({...userInfo, email: e.target.value})}>
+      </Input>
+
+      <Input 
+        type="password" 
+        placeholder="senha" 
+        value={userInfo.password} 
+        onChange={e => setUserInfo({...userInfo, password: e.target.value})}>          
+      </Input>
+      
+      <Button type="submit" onClick={handleLogin}>
+          Entrar
+      </Button>
+
       <StyledLink to="/subscribe">Não tem uma conta? Cadastre-se!</StyledLink>
     </Container>
   );

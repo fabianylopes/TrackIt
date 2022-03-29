@@ -3,6 +3,7 @@ import { useState } from 'react';
 import UserContext from "./contexts/UserContext";
 import Login from "./components/Login";
 import Subscribe from "./components/Subscribe";
+import Today from "./components/Today";
 
 export default function App() {
     const [token, setToken] = useState([]);
@@ -13,6 +14,8 @@ export default function App() {
             <Routes>
                 <Route path="/" element={<Login/>}></Route>
                 <Route path="/subscribe" element={<Subscribe/>}></Route>
+                <Route path="/today" element={<Today/>}></Route>
+
             </Routes>
         </BrowserRouter>
     </UserContext.Provider>
