@@ -1,0 +1,30 @@
+body {
+    width: 375px;
+    font-family: 'Roboto', sans-serif;
+    padding-top: 67px;
+  }
+  
+  .root {
+    width: 100vw;
+  }
+
+  .loading {
+    padding: 30%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .available {
+    background-color: #C3CFD9;
+    border: 1px solid #7B8B99;
+  }
+
+  .selected {
+    background-color: #8DD7CF;
+    border: 1px solid #1AAE9E;
+  }
+
+  .unavailable {
+    background-color: #FBE192;
+    border: 1px solid #F7C52B;
+  }
