@@ -1,31 +1,43 @@
 import { useState } from 'react';
 import { Link } from "react-router-dom";
-//import { useNavigate } from 'react-router';
-//import axios from "axios";
+import { useNavigate } from 'react-router';
+import axios from "axios";
 import styled from "styled-components";
 import Logo from '../assets/logo.png';
 
 export default function Subscribe() {
-    //const navigate = useNavigate();
+    const navigate = useNavigate();
 
-    const [email, setEmail] = useState('');
-    const [name, setName] = useState('');
-    const [image, setImage] = useState('');
-    const [password, setPassword] = useState('');
+    const [userInfo, setUserInfo] = useState({name: '', email: '', image: '', password: ''})
 
-  return (
-    <Container>
-        <img src={Logo}></img>
-        <Input type="email" placeholder="email" value={email} onChange={e => setEmail(e.target.value)} ></Input>
-        <Input type="password" placeholder="senha" value={password} onChange={e => setPassword(e.target.value)} ></Input>
-        <Input type="text" placeholder="nome" value={name} onChange={e => setName(e.target.value)} ></Input>
-        <Input type="url" placeholder="foto" value={image} onChange={e => setImage(e.target.value)} ></Input>
-        <Button>
-            Cadastrar
-        </Button>
-        <StyledLink to="/">Já tem uma conta? Faça login!</StyledLink>
-    </Container>
-  );
+
+    function handleSubscribe(){
+
+        const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up",
+        {
+            email: userInfo.email,
+            name: userInfo.name,
+            image: userInfo.image,
+            password: userInfo.password
+        });
+
+        promise.then(navigate('/'));
+        promise.catch(error => console.log(error));
+    }
+
+    return (
+        <Container>
+            <img src={Logo} alt="logo"></img>
+            <Input type="email" placeholder="email" value={userInfo.email} onChange={e => setUserInfo({...userInfo, email: e.target.value})} ></Input>
+            <Input type="password" placeholder="senha" value={userInfo.password} onChange={e => setUserInfo({...userInfo, password: e.target.value})} ></Input>
+            <Input type="text" placeholder="nome" value={userInfo.name} onChange={e => setUserInfo({...userInfo, name: e.target.value})} ></Input>
+            <Input type="url" placeholder="foto" value={userInfo.image} onChange={e => setUserInfo({...userInfo, image: e.target.value})} ></Input>
+            <Button onClick={handleSubscribe}>
+                Cadastrar
+            </Button>
+            <StyledLink to="/">Já tem uma conta? Faça login!</StyledLink>
+        </Container>
+    );
 }
 
 const Container = styled.div`

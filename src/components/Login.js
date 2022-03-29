@@ -3,19 +3,17 @@ import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router';
 import Logo from '../assets/logo.png';
 import styled from "styled-components";
-//import axios from "axios";
+import axios from "axios";
 import UserContext from "../contexts/UserContext";
 
 export default function Login() {
   const navigate = useNavigate();
-
   const { setToken } = useContext(UserContext);
-
-   const [loading, setLoading] = useState(false);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  
 
   return (
     <Container>
