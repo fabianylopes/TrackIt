@@ -1,4 +1,4 @@
-import { useState, useContext} from 'react';
+import { useState } from 'react';
 import styled from "styled-components";
 import Header from './Header';
 import Menu from "./Menu";
@@ -10,7 +10,7 @@ export default function Today() {
 
     let date = dayjs().locale('pt-br').format('dddd, DD/MM');
 
-    const [colorCheck, setColorCheck] = useState("#EBEBEB");
+    const [colorCheck, setColorCheck] = useState(false);
 
   return (
     <Container>
@@ -24,8 +24,8 @@ export default function Today() {
                     <P>Sequência atual: 3 dias</P>
                     <P>Seu recorde: 5 dias</P>
                 </Texto>
-                <Check color={colorCheck} onClick={() => setColorCheck('#8FC549')}>
-                    <img src={check}></img>
+                <Check color={colorCheck} onClick={() => setColorCheck(!colorCheck)}>
+                    <img src={check} alt="check-icone"/>
                 </Check>
             </Habitos>
         </Body>
@@ -100,7 +100,7 @@ const P = styled.p`
 const Check = styled.button`
     width: 70px;
     height: 70px;
-    background-color: ${props => props.color};
+    background-color: ${({ color }) => !color ? '#EBEBEB' : '#8FC549'};
     border-radius: 5px;
     display: flex;
     justify-content: center;

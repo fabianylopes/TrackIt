@@ -39,6 +39,7 @@ export default function Login() {
   return (
     <Container>
       <img src={Logo} alt="logo" />
+      
       <Input 
         type="email" 
         placeholder="email" 

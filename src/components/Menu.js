@@ -10,7 +10,7 @@ export default function Menu() {
 
   return (
     <MenuBar>
-        <Link to="/habitos">
+        <Link to="/habits">
             <Button>Hábitos</Button>
         </Link>
 
@@ -31,7 +31,7 @@ export default function Menu() {
             </Link>
         </Hoje>
 
-        <Link to="/historico">
+        <Link to="/history">
             <Button>Histórico</Button>
         </Link>
     </MenuBar>
