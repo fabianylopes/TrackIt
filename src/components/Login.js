@@ -8,19 +8,40 @@ import UserContext from "../contexts/UserContext";
 
 export default function Login() {
   const navigate = useNavigate();
+
   const { setToken } = useContext(UserContext);
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [userInfo, setUserInfo] = useState({email: '', password: ''})
 
-  
+  function handleLogin(){
+    
+    const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login",
+    {
+      email: userInfo.email,
+	    password: userInfo.password
+    });
+
+    promise.then(handleSuccess);
+    promise.catch(handleFailure);
+
+  }
+
+  function handleSuccess(response){
+    navigate('/today');
+    setToken(response.data);
+  }
+
+  function handleFailure(error){
+    alert(error.response.data.message);
+  }
+
 
   return (
     <Container>
       <img src={Logo} alt="logo" />
-        <Input type="email" placeholder="email" value={email} onChange={e => setEmail(e.target.value)}></Input>
-        <Input type="password" placeholder="senha" value={password} onChange={e => setPassword(e.target.value)}></Input>
-        <Button type="submit">
+        <Input type="email" placeholder="email" value={userInfo.email} onChange={e => setUserInfo({...userInfo, email: e.target.value})}></Input>
+        <Input type="password" placeholder="senha" value={userInfo.password} onChange={e => setUserInfo({...userInfo, password: e.target.value})}></Input>
+        <Button type="submit" onClick={handleLogin}>
             Entrar
         </Button>
       <StyledLink to="/subscribe">Não tem uma conta? Cadastre-se!</StyledLink>

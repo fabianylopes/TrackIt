@@ -8,7 +8,7 @@ import Logo from '../assets/logo.png';
 export default function Subscribe() {
     const navigate = useNavigate();
 
-    const [userInfo, setUserInfo] = useState({name: '', email: '', image: '', password: ''})
+    const [userInfo, setUserInfo] = useState({name: '', email: '', image: '', password: ''});
 
 
     function handleSubscribe(){
@@ -32,7 +32,7 @@ export default function Subscribe() {
             <Input type="password" placeholder="senha" value={userInfo.password} onChange={e => setUserInfo({...userInfo, password: e.target.value})} ></Input>
             <Input type="text" placeholder="nome" value={userInfo.name} onChange={e => setUserInfo({...userInfo, name: e.target.value})} ></Input>
             <Input type="url" placeholder="foto" value={userInfo.image} onChange={e => setUserInfo({...userInfo, image: e.target.value})} ></Input>
-            <Button onClick={handleSubscribe}>
+            <Button type="submit" onClick={handleSubscribe}>
                 Cadastrar
             </Button>
             <StyledLink to="/">Já tem uma conta? Faça login!</StyledLink>
