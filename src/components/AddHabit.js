@@ -2,6 +2,7 @@ import { useState, useContext } from 'react';
 import UserContext from '../contexts/UserContext';
 import styled from "styled-components";
 import axios from "axios";
+import Loading from './Loading';
 
 
 export default function AddHabit({ form, setForm }){
@@ -9,8 +10,9 @@ export default function AddHabit({ form, setForm }){
     const { token } = useContext(UserContext);
     
     const weekDays = ["D", "S", "T", "Q", "Q", "S", "S"];
-    
         
+    const [loading, setLoading] = useState(false);
+
     const [habitName, setHabitName] = useState('');
     const [selectedDays, setSelectedDays] = useState([]);
     
@@ -35,7 +37,11 @@ export default function AddHabit({ form, setForm }){
         days: selectedDays
     }
 
-    function handleHabit(){
+    function handleHabit(e){
+        e.preventDefault();
+
+        setLoading(true);
+
         const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", body, config);
 
         promise.then(handleSuccess);
@@ -51,24 +57,42 @@ export default function AddHabit({ form, setForm }){
     function handleFailure(error){
         setHabitName('');
         alert(error.response.data.message);
+        setLoading(false);
     }
 
     return (
         <NewHabit>
-        <Input type="text" placeholder="nome do hábito" value={habitName} onChange={e => setHabitName(e.target.value)}></Input>
+        <Input 
+            disabled={loading}
+            type="text" 
+            placeholder="nome do hábito" 
+            value={habitName} 
+            onChange={e => setHabitName(e.target.value)}
+            handleLoading={loading}
+        >    
+        </Input>
+
         <Week>
             {weekDays.map((day, index) => 
                 <WeekDay
+                    disabled={loading}
                     key={index}
                     days={selectedDays.includes(index)}
                     onClick={() => selectDay(index)}>{day}
                 </WeekDay>
             )}
         </Week>
+
         <CreateHabit>
-            <Cancel onClick={() => setForm(!form)}>Cancelar</Cancel>
-            <Salvar onClick={handleHabit}>Salvar</Salvar>
+            <Cancel onClick={() => setForm(!form)} handleLoading={loading} disabled={loading}>Cancelar</Cancel>
+            <Salvar onClick={handleHabit} handleLoading={loading} disabled={loading}>
+                
+                {loading ? <Loading/> : 'Salvar'}
+                
+                
+            </Salvar>
         </CreateHabit>
+
         </NewHabit>  
     );
 }
@@ -120,6 +144,7 @@ const Salvar = styled.button`
     border: none;
     border-radius: 4px;
     font-size: 16px;
+    text-align: center;
     cursor: pointer;
     opacity: ${(props) => props.handleLoading ? 0.7 : 1};
 `

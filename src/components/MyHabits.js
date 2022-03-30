@@ -3,6 +3,7 @@ import axios from "axios";
 import styled from "styled-components";
 import Delete from '../assets/delete.png';
 import UserContext from '../contexts/UserContext';
+import Habits from './Habits';
 
 export default function MyHabits(){
 
@@ -12,13 +13,15 @@ export default function MyHabits(){
 
     const [habits, setHabits] = useState([])
 
-    useEffect(() => {
 
-        const config = {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
         }
+    }
+
+
+    useEffect(() => {
 
 		const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", config);
 		
@@ -31,43 +34,56 @@ export default function MyHabits(){
         setHabits(response.data);
     }
 
-    console.log(habits);
+
+    function deleteHabit(id){
+        // eslint-disable-next-line no-restricted-globals
+        const confirmDelete = confirm('Deseja realmente deletar este hábito?');
+
+        if(confirmDelete){
+
+            const promise = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`, config);
+            
+            promise.then(<Habits/>);
+            promise.catch(error => console.log(error))
+        }
+    }
+
+
+    if(habits.length === 0){
+        return (
+            <SubTitulo>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</SubTitulo>
+        );
+    }
 
     return (
-        <MeusHabitos>
-
-            {habits.map((habit, index) => {
+        <>
+            {habits.map(({id, name, index}) => {
                 return (
-                    <>
+                    <MeusHabitos key={index}>
                          <Lixeira>
-                            <SubTitulo>{habit.name}</SubTitulo>
-                            <img src={Delete} alt="delete-icon"></img>
+                            <Title>{name}</Title>
+                            <img src={Delete} alt="delete-icon" onClick={() => deleteHabit(id)}/>
                         </Lixeira>
                         
                         <Week>
-                            {weekDays.map(weekday => 
-                            <WeekDay 
-                                >{weekday}
-                            </WeekDay>
-                            )}
+                            {weekDays.map(weekday => <WeekDay>{weekday}</WeekDay>)}
                         </Week>
                     
-                    </>
+                    </MeusHabitos>
                 );
             })}
-
-           
-        </MeusHabitos>  
+        </>  
     );
 }
 
-const SubTitulo = styled.h3`
+const Title = styled.h3`
     font-family: 'Lexend Deca', sans-serif;
     font-weight: 400;
-    font-size: 20   px;
+    font-size: 20px;
     color: #666;
     margin-bottom: 8px;
 `
+
 const MeusHabitos = styled.div`
     width: 340px;
     height: 90px;
@@ -104,4 +120,12 @@ const Lixeira = styled.div`
         height: 15px;
         cursor: pointer;
     }
+`
+
+const SubTitulo = styled.h3`
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 28px;
 `

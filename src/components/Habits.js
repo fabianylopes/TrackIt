@@ -26,18 +26,11 @@ export default function Habits(){
 
                 {form ? <AddHabit form={form} setForm={setForm}/> : <MyHabits/>}
 
-                {(true) ? <MyHabits/> : <NoHabits/>}
-
             </Body>
             <Menu/>
         </Container>
     );
 
-        function NoHabits(){
-            return (
-                <SubTitulo>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</SubTitulo>
-            );
-        }
 }
 const Container = styled.div`
     display: flex;
@@ -84,12 +77,4 @@ const Plus = styled.button`
     justify-content: center;
     align-items: center;
     cursor: pointer;    
-`
-
-const SubTitulo = styled.h3`
-    font-family: 'Lexend Deca', sans-serif;
-    font-weight: 400;
-    font-size: 18px;
-    color: #666;
-    margin-bottom: 28px;
 `
