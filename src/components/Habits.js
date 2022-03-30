@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styled from "styled-components";
 import Header from "./Header";
 import Menu from "./Menu";
-//import AddHabit from './AddHabit';
+import AddHabit from './AddHabit';
 
 export default function Habits(){
 
@@ -23,7 +23,7 @@ export default function Habits(){
                     <Plus onClick={showForm}>+</Plus>
                 </Habitos>
 
-                {/* {form && <AddHabit />} */}
+                {form && <AddHabit />}
 
                 <SubTitulo>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</SubTitulo>
             </Body>
