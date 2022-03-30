@@ -3,12 +3,13 @@ import { useContext } from 'react';
 import UserContext from "../contexts/UserContext";
 
 export default function Header() {
-    const { token } = useContext(UserContext);
+    
+    const { userInfo } = useContext(UserContext);
 
   return (
     <Head>
         <Logo>TrackIt</Logo>
-        <Image src={token.image}></Image>
+        <Image src={userInfo.image}></Image>
     </Head>
   );
 }

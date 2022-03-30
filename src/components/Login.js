@@ -1,4 +1,4 @@
-import { useState, useContext} from 'react';
+import { useContext} from 'react';
 import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router';
 import Logo from '../assets/logo.png';
@@ -9,9 +9,9 @@ import UserContext from "../contexts/UserContext";
 export default function Login() {
   const navigate = useNavigate();
 
-  const { setToken } = useContext(UserContext);
+  const { setToken, userInfo, setUserInfo } = useContext(UserContext);
 
-  const [userInfo, setUserInfo] = useState({email: '', password: ''})
+  //const [userInfo, setUserInfo] = useState({email: '', password: '', image: ''})
 
   function handleLogin(){
     
@@ -27,10 +27,11 @@ export default function Login() {
   }
 
   function handleSuccess(response){
+    setToken(response.data.token);
+    setUserInfo({...userInfo, image: response.data.image});
     navigate('/today');
-    setToken(response.data);
   }
-
+  
   function handleFailure(error){
     alert(error.response.data.message);
   }

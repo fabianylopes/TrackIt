@@ -23,7 +23,7 @@ export default function Habits(){
                     <Plus onClick={showForm}>+</Plus>
                 </Habitos>
 
-                {form && <AddHabit />}
+                {form && <AddHabit form={form} setForm={setForm}/>}
 
                 <SubTitulo>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</SubTitulo>
             </Body>

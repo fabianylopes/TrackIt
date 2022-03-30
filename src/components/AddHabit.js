@@ -4,50 +4,48 @@ import styled from "styled-components";
 import axios from "axios";
 
 
-export default function AddHabit(){
+export default function AddHabit({ form, setForm }){
     
-    const { token, setToken } = useContext(UserContext);
-
-    const config = {
-        headers: {
-            "Authorization": `Bearer ${token}`
-        }
-    }
-
+    const { token } = useContext(UserContext);
+    
     const weekDays = ["D", "S", "T", "Q", "Q", "S", "S"];
-  
-
+    
+        
     const [habitName, setHabitName] = useState('');
     const [selectedDays, setSelectedDays] = useState([]);
-
+    
     function selectDay(day){
-
+        
         if(selectedDays.includes(day)){
             setSelectedDays(selectedDays.filter(f => (f === day) ? false : true));
         } else {
             setSelectedDays([...selectedDays, day]);
         }
-
+        
+    }
+    
+       const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
     }
 
-    console.log(selectedDays);
+    const body = {
+        name: habitName,
+        days: selectedDays
+    }
 
     function handleHabit(){
-
-        const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", 
-        {
-            name: habitName,
-            days: selectedDays
-        }, 
-        config);
+        const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", body, config);
 
         promise.then(handleSuccess);
         promise.catch(handleFailure);
     }
 
-    function handleSuccess(response){
+    function handleSuccess(){
         setHabitName('');
-        setToken(response.data);
+        setSelectedDays([]);
+        setForm(!form)
     }
 
     function handleFailure(error){
@@ -57,7 +55,7 @@ export default function AddHabit(){
 
     return (
         <NewHabit>
-        <Input type="text" placeholder="nome do hábito"  onChange={e => setHabitName(e.target.value)}></Input>
+        <Input type="text" placeholder="nome do hábito" value={habitName} onChange={e => setHabitName(e.target.value)}></Input>
         <Week>
             {weekDays.map((day, index) => 
                 <WeekDay
@@ -68,7 +66,7 @@ export default function AddHabit(){
             )}
         </Week>
         <CreateHabit>
-            <Cancel >Cancelar</Cancel>
+            <Cancel onClick={() => setForm(!form)}>Cancelar</Cancel>
             <Salvar onClick={handleHabit}>Salvar</Salvar>
         </CreateHabit>
         </NewHabit>  
