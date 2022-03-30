@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Header from "./Header";
 import Menu from "./Menu";
 import AddHabit from './AddHabit';
+import MyHabits from './MyHabits';
 
 export default function Habits(){
 
@@ -23,15 +24,21 @@ export default function Habits(){
                     <Plus onClick={showForm}>+</Plus>
                 </Habitos>
 
-                {form && <AddHabit form={form} setForm={setForm}/>}
+                {form ? <AddHabit form={form} setForm={setForm}/> : <MyHabits/>}
 
-                <SubTitulo>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</SubTitulo>
+                {(true) ? <MyHabits/> : <NoHabits/>}
+
             </Body>
             <Menu/>
         </Container>
     );
-}
 
+        function NoHabits(){
+            return (
+                <SubTitulo>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</SubTitulo>
+            );
+        }
+}
 const Container = styled.div`
     display: flex;
     justify-content: center;

@@ -24,7 +24,7 @@ export default function AddHabit({ form, setForm }){
         
     }
     
-       const config = {
+    const config = {
         headers: {
             Authorization: `Bearer ${token}`
         }

@@ -1,15 +1,15 @@
-import { useState } from 'react';
+import { useContext } from 'react';
 import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router';
 import axios from "axios";
 import styled from "styled-components";
 import Logo from '../assets/logo.png';
+import UserContext from '../contexts/UserContext';
 
 export default function Subscribe() {
     const navigate = useNavigate();
-
-    const [userInfo, setUserInfo] = useState({name: '', email: '', image: '', password: ''});
-
+   
+    const { userInfo, setUserInfo } = useContext(UserContext);
 
     function handleSubscribe(){
 
