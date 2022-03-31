@@ -67,7 +67,7 @@ export default function AddHabit({ form, setForm }){
             disabled={loading}
             type="text" 
             placeholder="nome do hábito" 
-            value={habitName} 
+            value={habitName || ''} 
             onChange={e => setHabitName(e.target.value)}
             handleLoading={loading}
         >    
