@@ -12,7 +12,8 @@ export default function Login() {
 
   const { setToken, userInfo, setUserInfo, loading, setLoading } = useContext(UserContext);
 
-  function handleLogin(){
+  function handleLogin(e){
+    e.preventDefault();
 
     setLoading(true);
     
@@ -36,34 +37,40 @@ export default function Login() {
   function handleFailure(error){
     alert(error.response.data.message);
     setLoading(false);
+    alert(`${error}! Preencha corretamente os campos!`);
+    setUserInfo({});
+    
   }
 
 
   return (
     <Container>
       <img src={Logo} alt="logo" />
-      
-      <Input 
-        disabled={loading} 
-        handleLoading={loading}
-        type="email" 
-        placeholder="email" 
-        value={userInfo.email || ''}
-        onChange={e => setUserInfo({...userInfo, email: e.target.value})}>
-      </Input>
 
-      <Input 
-        disabled={loading} 
-        handleLoading={loading}
-        type="password" 
-        placeholder="senha" 
-        value={userInfo.password || ''} 
-        onChange={e => setUserInfo({...userInfo, password: e.target.value})}>          
-      </Input>
-      
-      <Button disabled={loading} handleLoading={loading} type="submit" onClick={handleLogin}>
-          {loading ? <Loading/> : 'Entrar'}
-      </Button>
+      <Form onSubmit={handleLogin}>
+          <Input 
+            type="email" 
+            placeholder="email" 
+            disabled={loading} 
+            handleLoading={loading}
+            value={userInfo.email || ''}
+            onChange={e => setUserInfo({...userInfo, email: e.target.value})}>
+          </Input>
+
+          <Input 
+            type="password" 
+            placeholder="senha" 
+            disabled={loading} 
+            handleLoading={loading}
+            value={userInfo.password || ''} 
+            onChange={e => setUserInfo({...userInfo, password: e.target.value})}>          
+          </Input>
+          
+          <Button disabled={loading} handleLoading={loading} type="submit">
+              {loading ? <Loading/> : 'Entrar'}
+          </Button>
+
+      </Form>
 
       <StyledLink to="/subscribe">Não tem uma conta? Cadastre-se!</StyledLink>
     </Container>
@@ -71,6 +78,15 @@ export default function Login() {
 }
 
 const Container = styled.div`
+    padding-top: 68px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+`
+
+const Form = styled.form`
     padding-top: 68px;
     display: flex;
     justify-content: center;

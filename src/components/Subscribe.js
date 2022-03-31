@@ -9,11 +9,11 @@ import Loading from './Loading';
 
 export default function Subscribe() {
     const navigate = useNavigate();
-    
-   
+       
     const { userInfo, setUserInfo, loading, setLoading } = useContext(UserContext);
 
-    function handleSubscribe(){
+    function handleSubscribe(e){
+        e.preventDefault();
 
         setLoading(true);
 
@@ -34,55 +34,61 @@ export default function Subscribe() {
       }
       
       function handleFailure(error){
+        console.log(error)
         alert(error.response.data.message);
         setLoading(false);
+        alert(`${error}! Preencha corretamente os campos!`);
+        setUserInfo({});
       }
 
     return (
         <Container>
             <img src={Logo} alt="logo"></img>
-            <Input 
-                disabled={loading} 
-                handleLoading={loading}
-                type="email" 
-                placeholder="email" 
-                value={userInfo.email || ''} 
-                onChange={e => setUserInfo({...userInfo, email: e.target.value})} 
-            >
-            </Input>
+            <Form onSubmit={handleSubscribe}>
+                <Input 
+                    type="email" 
+                    placeholder="email" 
+                    disabled={loading} 
+                    handleLoading={loading}
+                    value={userInfo.email || ''} 
+                    onChange={e => setUserInfo({...userInfo, email: e.target.value})} 
+                >
+                </Input>
 
-            <Input 
-                disabled={loading} 
-                handleLoading={loading}
-                type="password" 
-                placeholder="senha" 
-                value={userInfo.password || ''} 
-                onChange={e => setUserInfo({...userInfo, password: e.target.value})} 
-            >
-            </Input>
+                <Input 
+                    type="password" 
+                    placeholder="senha" 
+                    disabled={loading} 
+                    handleLoading={loading}
+                    value={userInfo.password || ''} 
+                    onChange={e => setUserInfo({...userInfo, password: e.target.value})} 
+                >
+                </Input>
 
-            <Input 
-                disabled={loading} 
-                handleLoading={loading}
-                type="text" 
-                placeholder="nome" 
-                value={userInfo.name || ''} 
-                onChange={e => setUserInfo({...userInfo, name: e.target.value})} 
-            >
-            </Input>
-            
-            <Input 
-                disabled={loading} 
-                handleLoading={loading}
-                type="url" placeholder="foto" 
-                value={userInfo.image || ''} 
-                onChange={e => setUserInfo({...userInfo, image: e.target.value})} 
-            >
-            </Input>
-            
-            <Button disabled={loading} handleLoading={loading} type="submit" onClick={handleSubscribe}>
-                {loading ? <Loading/> : 'Cadastrar'}
-            </Button>
+                <Input 
+                    type="text" 
+                    placeholder="nome" 
+                    disabled={loading} 
+                    handleLoading={loading}
+                    value={userInfo.name || ''} 
+                    onChange={e => setUserInfo({...userInfo, name: e.target.value})} 
+                    >
+                </Input>
+                
+                <Input 
+                    type="url" 
+                    placeholder="foto" 
+                    disabled={loading} 
+                    handleLoading={loading}
+                    value={userInfo.image || ''} 
+                    onChange={e => setUserInfo({...userInfo, image: e.target.value})} 
+                    >
+                </Input>
+                
+                <Button type="submit" disabled={loading} handleLoading={loading}>
+                    {loading ? <Loading/> : 'Cadastrar'}
+                </Button>
+            </Form>
 
             <StyledLink to="/">Já tem uma conta? Faça login!</StyledLink>
         </Container>
@@ -90,6 +96,15 @@ export default function Subscribe() {
 }
 
 const Container = styled.div`
+    padding-top: 68px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+`
+
+const Form = styled.form`
     padding-top: 68px;
     display: flex;
     justify-content: center;
