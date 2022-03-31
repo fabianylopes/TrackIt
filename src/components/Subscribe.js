@@ -46,7 +46,7 @@ export default function Subscribe() {
                 handleLoading={loading}
                 type="email" 
                 placeholder="email" 
-                value={userInfo.email} 
+                value={userInfo.email || ''} 
                 onChange={e => setUserInfo({...userInfo, email: e.target.value})} 
             >
             </Input>
@@ -56,21 +56,26 @@ export default function Subscribe() {
                 handleLoading={loading}
                 type="password" 
                 placeholder="senha" 
-                value={userInfo.password} 
+                value={userInfo.password || ''} 
                 onChange={e => setUserInfo({...userInfo, password: e.target.value})} 
             >
             </Input>
 
             <Input 
-            disabled={loading} 
-            handleLoading={loading}
-            type="text" placeholder="nome" value={userInfo.name} onChange={e => setUserInfo({...userInfo, name: e.target.value})} ></Input>
+                disabled={loading} 
+                handleLoading={loading}
+                type="text" 
+                placeholder="nome" 
+                value={userInfo.name || ''} 
+                onChange={e => setUserInfo({...userInfo, name: e.target.value})} 
+            >
+            </Input>
             
             <Input 
                 disabled={loading} 
                 handleLoading={loading}
                 type="url" placeholder="foto" 
-                value={userInfo.image} 
+                value={userInfo.image || ''} 
                 onChange={e => setUserInfo({...userInfo, image: e.target.value})} 
             >
             </Input>

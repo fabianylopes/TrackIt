@@ -48,7 +48,7 @@ export default function Login() {
         handleLoading={loading}
         type="email" 
         placeholder="email" 
-        value={userInfo.email}
+        value={userInfo.email || ''}
         onChange={e => setUserInfo({...userInfo, email: e.target.value})}>
       </Input>
 
@@ -57,7 +57,7 @@ export default function Login() {
         handleLoading={loading}
         type="password" 
         placeholder="senha" 
-        value={userInfo.password} 
+        value={userInfo.password || ''} 
         onChange={e => setUserInfo({...userInfo, password: e.target.value})}>          
       </Input>
       
