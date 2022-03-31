@@ -104,8 +104,8 @@ const Button = styled.button`
     border: none;
     border-radius: 4px;
     font-size: 21px;
-    cursor: pointer;
     opacity: ${(props) => props.handleLoading ? 0.7 : 1};
+    cursor: ${(props) => props.handleLoading ?  'not-allowed' : 'pointer'};
 `
 
 const StyledLink = styled(Link)`

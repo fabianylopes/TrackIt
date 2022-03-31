@@ -13,6 +13,7 @@ export default function MyHabits(){
 
     const [habits, setHabits] = useState([])
 
+    const [habitDays, setHabitDays] = useState(false);
 
     const config = {
         headers: {
@@ -57,7 +58,7 @@ export default function MyHabits(){
 
     return (
         <>
-            {habits.map(({id, name, index}) => {
+            {habits.map(({id, name, days, index}) => {
                 return (
                     <MeusHabitos key={index}>
                          <Lixeira>
@@ -66,7 +67,11 @@ export default function MyHabits(){
                         </Lixeira>
                         
                         <Week>
-                            {weekDays.map(weekday => <WeekDay>{weekday}</WeekDay>)}
+                            {weekDays.map(day => 
+                            <WeekDay
+                                days={habitDays.includes(index)}
+                            >{day}
+                            </WeekDay>)}
                         </Week>
                     
                     </MeusHabitos>
@@ -102,8 +107,8 @@ const WeekDay = styled.button`
     width: 30px;
     height: 30px;
     border-radius: 5px;
-    background-color: #fff;
-    color: #666;
+    background-color: ${(props) => props.days ? "#F2F2F2" : "#FFFFFF"};
+    color: ${(props) => props.days ? "#AFAFAF" : "#000"};
     border: 1px solid #D5D5D5;
     font-family: 'Lexend Deca', sans-serif;
     font-size: 20px;
@@ -111,6 +116,8 @@ const WeekDay = styled.button`
     margin-bottom: 30px;
     cursor: pointer;
 `
+
+
 
 const Lixeira = styled.div`
     display: flex;
