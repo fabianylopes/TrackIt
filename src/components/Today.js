@@ -15,7 +15,11 @@ export default function Today() {
 
     const [colorCheck, setColorCheck] = useState(false);
     const [dayHabits, setdayHabits] = useState([]);
-    
+    const [progress, setProgress] = useState(null);
+
+    const [doneNumber, setDoneNumber] = useState([]);
+
+  
 
     const config = {
         headers: {
@@ -34,32 +38,57 @@ export default function Today() {
         setdayHabits(response.data);
     }
 
-  return (
-    <Container>
-        <Header/>
-        <Body>
-            <Titulo>{date}</Titulo>
-            <SubTitulo>Nenhum hábito concluído ainda</SubTitulo>
 
-                {dayHabits.map(habit => 
+    function handleProgress(id){
+
+        if(doneNumber.includes(id)){
+            setDoneNumber(doneNumber.filter(f => (f === id) ? false : true));
+        } else {
+            setDoneNumber([...doneNumber, id]);
+        }
+
+    }
+
+    console.log(doneNumber);
+
+    function Progress(){
+        return doneNumber.length === 0 ? 
+        (
+            <SubTitulo color={colorCheck}>Nenhum hábito concluído ainda</SubTitulo>
+        ) : (
+            <SubTitulo color={colorCheck}>67% dos hábitos concluídos</SubTitulo>          
+        )
+    }
+
+
+    return (
+        <Container>
+            <Header/>
+            <Body>
+                <Titulo>{date}</Titulo>
+                <Progress/>
+
+                    {dayHabits.map(({ id, name, currentSequence, highestSequence}) => 
+                        
+                    <Habitos>
+                        <Texto>
+                            <Habito>{name}</Habito>
+                            <P>Sequência atual: {currentSequence} dias</P>
+                            <P>Seu recorde: {highestSequence} dias</P>
+                        </Texto>
+                        <Check 
+                            color={doneNumber.includes(id)} 
+                            onClick={() => handleProgress(id)}>
+                            <img src={check} alt="check-icon"/>
+                        </Check>
+                    </Habitos>
                     
-                <Habitos>
-                    <Texto>
-                        <Habito>{habit.name}</Habito>
-                        <P>Sequência atual: {habit.currentSequence} dias</P>
-                        <P>Seu recorde: {habit.highestSequence} dias</P>
-                    </Texto>
-                    <Check color={colorCheck} onClick={() => setColorCheck(!colorCheck)}>
-                        <img src={check} alt="check-icon"/>
-                    </Check>
-                </Habitos>
-                
-                )}
+                    )}
 
-        </Body>
-        <Menu/>
-    </Container>
-  );
+            </Body>
+            <Menu/>
+        </Container>
+    );
 }
 
 const Container = styled.div`
@@ -90,7 +119,7 @@ const SubTitulo = styled.h3`
     font-family: 'Lexend Deca', sans-serif;
     font-weight: 400;
     font-size: 18px;
-    color: #BABABA;
+    color: ${({ color }) => !color ? '#BABABA' : '#8FC549'};
     margin-bottom: 28px;
 `
 
