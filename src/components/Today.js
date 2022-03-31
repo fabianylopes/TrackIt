@@ -47,18 +47,21 @@ export default function Today() {
             setDoneNumber([...doneNumber, id]);
         }
 
-    }
 
-    console.log(doneNumber);
+    }
 
     function Progress(){
+
+        let percent = (100 * doneNumber.length) / (dayHabits.length);
+
         return doneNumber.length === 0 ? 
         (
-            <SubTitulo color={colorCheck}>Nenhum hábito concluído ainda</SubTitulo>
+            <SubTitulo color={doneNumber.length}>Nenhum hábito concluído ainda</SubTitulo>
         ) : (
-            <SubTitulo color={colorCheck}>67% dos hábitos concluídos</SubTitulo>          
+            <SubTitulo color={doneNumber.length}>{`${percent}% dos hábitos concluídos`}</SubTitulo>          
         )
     }
+
 
 
     return (
@@ -68,7 +71,7 @@ export default function Today() {
                 <Titulo>{date}</Titulo>
                 <Progress/>
 
-                    {dayHabits.map(({ id, name, currentSequence, highestSequence}) => 
+                    {dayHabits.map(({ id, done, name, currentSequence, highestSequence }) => 
                         
                     <Habitos>
                         <Texto>
@@ -77,6 +80,7 @@ export default function Today() {
                             <P>Seu recorde: {highestSequence} dias</P>
                         </Texto>
                         <Check 
+                            done={done}
                             color={doneNumber.includes(id)} 
                             onClick={() => handleProgress(id)}>
                             <img src={check} alt="check-icon"/>
@@ -119,7 +123,7 @@ const SubTitulo = styled.h3`
     font-family: 'Lexend Deca', sans-serif;
     font-weight: 400;
     font-size: 18px;
-    color: ${({ color }) => !color ? '#BABABA' : '#8FC549'};
+    color: ${({ color }) => color === 0 ? '#BABABA' : '#8FC549'};
     margin-bottom: 28px;
 `
 
