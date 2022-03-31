@@ -10,9 +10,10 @@ import History from "./components/History";
 export default function App() {
     const [token, setToken] = useState([]);
     const [userInfo, setUserInfo] = useState({})
+    const [loading, setLoading] = useState(false);
 
   return (
-    <UserContext.Provider value={{ token, setToken, userInfo, setUserInfo}}>  
+    <UserContext.Provider value={{ token, setToken, userInfo, setUserInfo, loading, setLoading}}>  
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Login/>}></Route>

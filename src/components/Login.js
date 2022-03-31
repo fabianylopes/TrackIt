@@ -5,15 +5,16 @@ import Logo from '../assets/logo.png';
 import styled from "styled-components";
 import axios from "axios";
 import UserContext from "../contexts/UserContext";
+import Loading from './Loading';
 
 export default function Login() {
   const navigate = useNavigate();
 
-  const { setToken, userInfo, setUserInfo } = useContext(UserContext);
-
-  //const [userInfo, setUserInfo] = useState({email: '', password: '', image: ''})
+  const { setToken, userInfo, setUserInfo, loading, setLoading } = useContext(UserContext);
 
   function handleLogin(){
+
+    setLoading(true);
     
     const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login",
     {
@@ -34,6 +35,7 @@ export default function Login() {
   
   function handleFailure(error){
     alert(error.response.data.message);
+    setLoading(false);
   }
 
 
@@ -42,6 +44,8 @@ export default function Login() {
       <img src={Logo} alt="logo" />
       
       <Input 
+        disabled={loading} 
+        handleLoading={loading}
         type="email" 
         placeholder="email" 
         value={userInfo.email}
@@ -49,14 +53,16 @@ export default function Login() {
       </Input>
 
       <Input 
+        disabled={loading} 
+        handleLoading={loading}
         type="password" 
         placeholder="senha" 
         value={userInfo.password} 
         onChange={e => setUserInfo({...userInfo, password: e.target.value})}>          
       </Input>
       
-      <Button type="submit" onClick={handleLogin}>
-          Entrar
+      <Button disabled={loading} handleLoading={loading} type="submit" onClick={handleLogin}>
+          {loading ? <Loading/> : 'Entrar'}
       </Button>
 
       <StyledLink to="/subscribe">Não tem uma conta? Cadastre-se!</StyledLink>

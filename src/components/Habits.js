@@ -16,23 +16,28 @@ export default function Habits(){
     }
 
     return (
-        <Container>
+        <>
             <Header/>
-            <Body>
-                <Habitos>
-                    <Titulo>Meus hábitos</Titulo>
-                    <Plus onClick={showForm}>+</Plus>
-                </Habitos>
+            <Container>
+                <Body>
+                    <Habitos>
+                        <Titulo>Meus hábitos</Titulo>
+                        <Plus onClick={showForm}>+</Plus>
+                    </Habitos>
 
-                {form ? <AddHabit form={form} setForm={setForm}/> : <MyHabits/>}
+                    {form ? <AddHabit form={form} setForm={setForm}/> : <MyHabits/>}
 
-            </Body>
+                </Body>
+            </Container>
             <Menu/>
-        </Container>
+         </>
     );
 
 }
 const Container = styled.div`
+    height: 100vh;
+    padding-bottom: 70px;
+
     display: flex;
     justify-content: center;
     align-items: center;

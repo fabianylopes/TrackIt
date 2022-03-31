@@ -7,11 +7,10 @@ import Loading from './Loading';
 
 export default function AddHabit({ form, setForm }){
     
-    const { token } = useContext(UserContext);
+    const { token, loading, setLoading } = useContext(UserContext);
     
     const weekDays = ["D", "S", "T", "Q", "Q", "S", "S"];
         
-    const [loading, setLoading] = useState(false);
 
     const [habitName, setHabitName] = useState('');
     const [selectedDays, setSelectedDays] = useState([]);

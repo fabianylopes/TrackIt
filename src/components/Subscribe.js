@@ -5,13 +5,17 @@ import axios from "axios";
 import styled from "styled-components";
 import Logo from '../assets/logo.png';
 import UserContext from '../contexts/UserContext';
+import Loading from './Loading';
 
 export default function Subscribe() {
     const navigate = useNavigate();
+    
    
-    const { userInfo, setUserInfo } = useContext(UserContext);
+    const { userInfo, setUserInfo, loading, setLoading } = useContext(UserContext);
 
     function handleSubscribe(){
+
+        setLoading(true);
 
         const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up",
         {
@@ -21,20 +25,60 @@ export default function Subscribe() {
             password: userInfo.password
         });
 
-        promise.then(navigate('/'));
-        promise.catch(error => console.log(error));
+        promise.then(handleSuccess);
+        promise.catch(handleFailure);
     }
+
+    function handleSuccess(){
+        navigate('/');
+      }
+      
+      function handleFailure(error){
+        alert(error.response.data.message);
+        setLoading(false);
+      }
 
     return (
         <Container>
             <img src={Logo} alt="logo"></img>
-            <Input type="email" placeholder="email" value={userInfo.email} onChange={e => setUserInfo({...userInfo, email: e.target.value})} ></Input>
-            <Input type="password" placeholder="senha" value={userInfo.password} onChange={e => setUserInfo({...userInfo, password: e.target.value})} ></Input>
-            <Input type="text" placeholder="nome" value={userInfo.name} onChange={e => setUserInfo({...userInfo, name: e.target.value})} ></Input>
-            <Input type="url" placeholder="foto" value={userInfo.image} onChange={e => setUserInfo({...userInfo, image: e.target.value})} ></Input>
-            <Button type="submit" onClick={handleSubscribe}>
-                Cadastrar
+            <Input 
+                disabled={loading} 
+                handleLoading={loading}
+                type="email" 
+                placeholder="email" 
+                value={userInfo.email} 
+                onChange={e => setUserInfo({...userInfo, email: e.target.value})} 
+            >
+            </Input>
+
+            <Input 
+                disabled={loading} 
+                handleLoading={loading}
+                type="password" 
+                placeholder="senha" 
+                value={userInfo.password} 
+                onChange={e => setUserInfo({...userInfo, password: e.target.value})} 
+            >
+            </Input>
+
+            <Input 
+            disabled={loading} 
+            handleLoading={loading}
+            type="text" placeholder="nome" value={userInfo.name} onChange={e => setUserInfo({...userInfo, name: e.target.value})} ></Input>
+            
+            <Input 
+                disabled={loading} 
+                handleLoading={loading}
+                type="url" placeholder="foto" 
+                value={userInfo.image} 
+                onChange={e => setUserInfo({...userInfo, image: e.target.value})} 
+            >
+            </Input>
+            
+            <Button disabled={loading} handleLoading={loading} type="submit" onClick={handleSubscribe}>
+                {loading ? <Loading/> : 'Cadastrar'}
             </Button>
+
             <StyledLink to="/">Já tem uma conta? Faça login!</StyledLink>
         </Container>
     );
