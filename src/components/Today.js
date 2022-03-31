@@ -1,16 +1,38 @@
-import { useState } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import axios from "axios";
 import styled from "styled-components";
 import Header from './Header';
 import Menu from "./Menu";
 import check from '../assets/check.png';
 import dayjs from "dayjs";
-import 'dayjs/locale/pt-br'
+import 'dayjs/locale/pt-br';
+import UserContext from '../contexts/UserContext';
 
 export default function Today() {
-
     let date = dayjs().locale('pt-br').format('dddd, DD/MM');
 
+    const { token } = useContext(UserContext);
+
     const [colorCheck, setColorCheck] = useState(false);
+    const [dayHabits, setdayHabits] = useState([]);
+    
+
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    useEffect(() => {
+        const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today", config);
+
+        promise.then(handleSuccess);
+        promise.catch(error => console.log(error));
+    });
+
+    function handleSuccess(response){
+        setdayHabits(response.data);
+    }
 
   return (
     <Container>
@@ -18,16 +40,22 @@ export default function Today() {
         <Body>
             <Titulo>{date}</Titulo>
             <SubTitulo>Nenhum hábito concluído ainda</SubTitulo>
-            <Habitos>
-                <Texto>
-                    <Habito>Ler 1 capítulo de livro</Habito>
-                    <P>Sequência atual: 3 dias</P>
-                    <P>Seu recorde: 5 dias</P>
-                </Texto>
-                <Check color={colorCheck} onClick={() => setColorCheck(!colorCheck)}>
-                    <img src={check} alt="check-icone"/>
-                </Check>
-            </Habitos>
+
+                {dayHabits.map(habit => 
+                    
+                <Habitos>
+                    <Texto>
+                        <Habito>{habit.name}</Habito>
+                        <P>Sequência atual: {habit.currentSequence} dias</P>
+                        <P>Seu recorde: {habit.highestSequence} dias</P>
+                    </Texto>
+                    <Check color={colorCheck} onClick={() => setColorCheck(!colorCheck)}>
+                        <img src={check} alt="check-icon"/>
+                    </Check>
+                </Habitos>
+                
+                )}
+
         </Body>
         <Menu/>
     </Container>
@@ -72,6 +100,8 @@ const Habitos = styled.div`
     background-color: #fff;
     border-radius: 5px;
     padding-right: 13px;
+    margin-bottom: 10px;
+
     display: flex;
     justify-content: space-between;
     align-items: center;
