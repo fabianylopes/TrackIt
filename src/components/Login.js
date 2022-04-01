@@ -54,7 +54,9 @@ export default function Login() {
             disabled={loading} 
             handleLoading={loading}
             value={userInfo.email || ''}
-            onChange={e => setUserInfo({...userInfo, email: e.target.value})}>
+            onChange={e => setUserInfo({...userInfo, email: e.target.value})}
+            required
+          >
           </Input>
 
           <Input 
@@ -63,15 +65,20 @@ export default function Login() {
             disabled={loading} 
             handleLoading={loading}
             value={userInfo.password || ''} 
-            onChange={e => setUserInfo({...userInfo, password: e.target.value})}>          
+            onChange={e => setUserInfo({...userInfo, password: e.target.value})}
+            required
+            >          
           </Input>
           
-          <Button disabled={loading} handleLoading={loading} type="submit">
-              {loading ? <Loading/> : 'Entrar'}
+          <Button 
+            type="submit"
+            disabled={loading} 
+            handleLoading={loading}  
+          >
+            {loading ? <Loading/> : 'Entrar'}
           </Button>
 
       </Form>
-
       <StyledLink to="/subscribe">Não tem uma conta? Cadastre-se!</StyledLink>
     </Container>
   );

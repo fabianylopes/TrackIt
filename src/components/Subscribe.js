@@ -52,6 +52,7 @@ export default function Subscribe() {
                     handleLoading={loading}
                     value={userInfo.email || ''} 
                     onChange={e => setUserInfo({...userInfo, email: e.target.value})} 
+                    required
                 >
                 </Input>
 
@@ -62,6 +63,7 @@ export default function Subscribe() {
                     handleLoading={loading}
                     value={userInfo.password || ''} 
                     onChange={e => setUserInfo({...userInfo, password: e.target.value})} 
+                    required
                 >
                 </Input>
 
@@ -72,6 +74,7 @@ export default function Subscribe() {
                     handleLoading={loading}
                     value={userInfo.name || ''} 
                     onChange={e => setUserInfo({...userInfo, name: e.target.value})} 
+                    required
                     >
                 </Input>
                 
@@ -82,14 +85,18 @@ export default function Subscribe() {
                     handleLoading={loading}
                     value={userInfo.image || ''} 
                     onChange={e => setUserInfo({...userInfo, image: e.target.value})} 
+                    required
                     >
                 </Input>
                 
-                <Button type="submit" disabled={loading} handleLoading={loading}>
+                <Button 
+                    type="submit" 
+                    disabled={loading} 
+                    handleLoading={loading}
+                >
                     {loading ? <Loading/> : 'Cadastrar'}
                 </Button>
             </Form>
-
             <StyledLink to="/">Já tem uma conta? Faça login!</StyledLink>
         </Container>
     );
