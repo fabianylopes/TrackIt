@@ -13,9 +13,7 @@ export default function Today() {
 
     const { token } = useContext(UserContext);
 
-    const [colorCheck, setColorCheck] = useState(false);
     const [dayHabits, setdayHabits] = useState([]);
-    const [progress, setProgress] = useState(null);
 
     const [doneNumber, setDoneNumber] = useState([]);
 
@@ -47,6 +45,16 @@ export default function Today() {
             setDoneNumber([...doneNumber, id]);
         }
 
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }
+        
+        const promise = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`, undefined, config);
+
+        promise.then(response => console.log(response));
+        promise.catch(error => console.log(error.response.data.message));
 
     }
 
@@ -58,7 +66,7 @@ export default function Today() {
         (
             <SubTitulo color={doneNumber.length}>Nenhum hábito concluído ainda</SubTitulo>
         ) : (
-            <SubTitulo color={doneNumber.length}>{`${percent}% dos hábitos concluídos`}</SubTitulo>          
+            <SubTitulo color={doneNumber.length}>{`${percent.toFixed(2)}% dos hábitos concluídos`}</SubTitulo>          
         )
     }
 
@@ -73,7 +81,7 @@ export default function Today() {
 
                     {dayHabits.map(({ id, done, name, currentSequence, highestSequence }) => 
                         
-                    <Habitos>
+                    <Habitos key={id}>
                         <Texto>
                             <Habito>{name}</Habito>
                             <P>Sequência atual: {currentSequence} dias</P>

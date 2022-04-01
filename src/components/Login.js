@@ -18,10 +18,11 @@ export default function Login() {
     setLoading(true);
     
     const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login",
-    {
-      email: userInfo.email,
-	    password: userInfo.password
-    });
+      {
+        email: userInfo.email,
+        password: userInfo.password
+      }
+    );
 
     promise.then(handleSuccess);
     promise.catch(handleFailure);
@@ -35,13 +36,11 @@ export default function Login() {
   }
   
   function handleFailure(error){
-    alert(error.response.data.message);
     setLoading(false);
+    alert(error.response.data.message);
     alert(`${error}! Preencha corretamente os campos!`);
     setUserInfo({});
-    
   }
-
 
   return (
     <Container>
@@ -79,7 +78,7 @@ export default function Login() {
           </Button>
 
       </Form>
-      <StyledLink to="/subscribe">Não tem uma conta? Cadastre-se!</StyledLink>
+      <StyledLink to="/register">Não tem uma conta? Cadastre-se!</StyledLink>
     </Container>
   );
 }

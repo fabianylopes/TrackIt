@@ -13,7 +13,7 @@ export default function MyHabits(){
 
     const [habits, setHabits] = useState([])
 
-    const [habitDays, setHabitDays] = useState(false);
+    const [habitDays, setHabitDays] = useState([]);
 
     const config = {
         headers: {
@@ -33,7 +33,10 @@ export default function MyHabits(){
 
     function handleSuccess(response){
         setHabits(response.data);
+        setHabitDays(response.data.days);
     }
+
+    console.log(habitDays);
 
 
     function deleteHabit(id){
@@ -44,7 +47,7 @@ export default function MyHabits(){
 
             const promise = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`, config);
             
-            promise.then(<Habits/>);
+            promise.then(response => console.log(response));
             promise.catch(error => console.log(error))
         }
     }
@@ -58,9 +61,9 @@ export default function MyHabits(){
 
     return (
         <>
-            {habits.map(({id, name, days, index}) => {
+            {habits.map(({ id, name }) => {
                 return (
-                    <MeusHabitos key={index}>
+                    <MeusHabitos key={id}>
                          <Lixeira>
                             <Title>{name}</Title>
                             <img src={Delete} alt="delete-icon" onClick={() => deleteHabit(id)}/>
@@ -69,7 +72,8 @@ export default function MyHabits(){
                         <Week>
                             {weekDays.map(day => 
                             <WeekDay
-                                days={habitDays.includes(index)}
+                                
+                                days={habitDays.includes(id)}
                             >{day}
                             </WeekDay>)}
                         </Week>

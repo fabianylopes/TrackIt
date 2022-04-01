@@ -7,12 +7,12 @@ import Logo from '../assets/logo.png';
 import UserContext from '../contexts/UserContext';
 import Loading from './Loading';
 
-export default function Subscribe() {
+export default function Register() {
     const navigate = useNavigate();
        
     const { userInfo, setUserInfo, loading, setLoading } = useContext(UserContext);
 
-    function handleSubscribe(e){
+    function handleRegister(e){
         e.preventDefault();
 
         setLoading(true);
@@ -44,7 +44,7 @@ export default function Subscribe() {
     return (
         <Container>
             <img src={Logo} alt="logo"></img>
-            <Form onSubmit={handleSubscribe}>
+            <Form onSubmit={handleRegister}>
                 <Input 
                     type="email" 
                     placeholder="email" 
