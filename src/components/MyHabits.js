@@ -1,31 +1,16 @@
-import { useState, useEffect, useContext } from 'react';
+import { useContext } from 'react';
 import axios from "axios";
 import styled from "styled-components";
 import Delete from '../assets/delete.png';
 import UserContext from '../contexts/UserContext';
 
-export default function MyHabits({ weekDays }){
+export default function MyHabits({ weekDays,loadHabits, habits }){
 
     const { token } = useContext(UserContext);
 
-    const [habits, setHabits] = useState([])
-
-    //const [habitDays, setHabitDays] = useState([]);
-
     const config = {headers: {Authorization: `Bearer ${token}`}}
 
-    useEffect(() => {
-
-		const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", config);
-		
-        promise.then(handleSuccess);
-        promise.catch(error => console.log(error.response));
-
-	}, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-    function handleSuccess(response){
-        setHabits(response.data);
-    }
+    loadHabits();
 
     function deleteHabit(id){
         // eslint-disable-next-line no-restricted-globals
@@ -35,7 +20,7 @@ export default function MyHabits({ weekDays }){
 
             const promise = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`, config);
             
-            promise.then(response => console.log(response));
+            promise.then(loadHabits);
             promise.catch(error => console.log(error))
         }
     }
@@ -103,7 +88,6 @@ const WeekDay = styled.button`
     font-size: 20px;
     margin-right: 4px;
     margin-bottom: 30px;
-    cursor: pointer;
 `
 
 

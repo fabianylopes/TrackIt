@@ -26,7 +26,8 @@ export default function Today() {
 
         promise.then(handleSuccess);
         promise.catch(error => console.log(error));
-    });
+
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     function handleSuccess(response){
         setdayHabits(response.data);

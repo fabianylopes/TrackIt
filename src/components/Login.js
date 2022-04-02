@@ -16,7 +16,7 @@ export default function Login() {
     if(token){
       navigate('/today');
     }
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   function handleLogin(e){
     e.preventDefault();

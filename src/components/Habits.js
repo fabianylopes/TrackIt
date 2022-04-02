@@ -1,15 +1,31 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import axios from "axios";
 import styled from "styled-components";
 import Header from "./Header";
 import Menu from "./Menu";
 import AddHabit from './AddHabit';
 import MyHabits from './MyHabits';
+import UserContext from '../contexts/UserContext';
 
 export default function Habits(){
 
+    const { token } = useContext(UserContext);
+
+    const config = {headers: {Authorization: `Bearer ${token}`}}
+
     const [openForm, setOpenForm] = useState(false);
+    const [habits, setHabits] = useState([]);
 
     const weekDays = ["D", "S", "T", "Q", "Q", "S", "S"];
+
+    function getHabits(){
+
+        const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", config);
+        
+        promise.then(response => setHabits(response.data));
+        promise.catch(error => console.log(error));
+        
+    }
 
     return (
         <>
@@ -23,7 +39,7 @@ export default function Habits(){
 
                     {openForm && <AddHabit weekDays={weekDays} setOpenForm={setOpenForm}/>}
 
-                    <MyHabits weekDays={weekDays}/>
+                    <MyHabits loadHabits={getHabits} habits={habits} weekDays={weekDays}/>
 
                 </Body>
             </Container>
