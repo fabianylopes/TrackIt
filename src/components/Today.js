@@ -60,7 +60,7 @@ export default function Today() {
         setProgressPercentage((doneNumber.length / dayHabits.length) * 100);
         
         return (
-            <Text color={progressPercentage}>
+            <Text Textcolor={progressPercentage}>
                 {doneNumber.length  === 0 ? 
                 'Nenhum hábito concluído ainda' : 
                 `${progressPercentage.toFixed(2)}% dos hábitos concluídos`}
@@ -85,7 +85,7 @@ export default function Today() {
                         </Habit>
                         <Check 
                             done={done}
-                            color={doneNumber.includes(id)} 
+                            $color={doneNumber.includes(id)} 
                             onClick={() => handleProgress(id)}>
                             <img src={check} alt="check-icon"/>
                         </Check>
@@ -127,7 +127,7 @@ const Text = styled.h3`
     font-family: 'Lexend Deca', sans-serif;
     font-weight: 400;
     font-size: 18px;
-    color: ${({ color }) => color === 0 ? '#BABABA' : '#8FC549'};
+    color: ${({ Textcolor }) => Textcolor === 0 ? '#BABABA' : '#8FC549'};
     margin-bottom: 28px;
 `
 
@@ -167,7 +167,7 @@ const P = styled.p`
 const Check = styled.button`
     width: 70px;
     height: 70px;
-    background-color: ${({ color }) => !color ? '#EBEBEB' : '#8FC549'};
+    background-color: ${({ color }) => color ? '#8FC549' : '#EBEBEB'};
     border-radius: 5px;
     display: flex;
     justify-content: center;
