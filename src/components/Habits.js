@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react';
-import axios from "axios";
 import styled from "styled-components";
+import axios from "axios";
 import Header from "./Header";
 import Menu from "./Menu";
 import AddHabit from './AddHabit';
@@ -9,14 +9,14 @@ import UserContext from '../contexts/UserContext';
 
 export default function Habits(){
 
+    const weekDays = ["D", "S", "T", "Q", "Q", "S", "S"];
+    
     const { token } = useContext(UserContext);
 
     const config = {headers: {Authorization: `Bearer ${token}`}}
 
     const [openForm, setOpenForm] = useState(false);
     const [habits, setHabits] = useState([]);
-
-    const weekDays = ["D", "S", "T", "Q", "Q", "S", "S"];
 
     function getHabits(){
 
@@ -50,11 +50,13 @@ export default function Habits(){
     );
 
 }
+
 const Container = styled.div`
     width: 375px;
     height: 100vh;
     padding-top: 70px;
     padding-bottom: 70px;
+    background-color: #E5E5E5;
 
     display: flex;
     justify-content: center;
@@ -67,7 +69,7 @@ const Body = styled.div`
     height: 100vh;
     background-color: #E5E5E5;
     padding-top: 98px;
-    padding-bottom: 170px;
+    padding-bottom: 70px;
     padding-left: 17px;
     padding-right: 18px;
 `

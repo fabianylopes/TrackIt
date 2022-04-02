@@ -9,7 +9,7 @@ export default function History(){
                 <Header/>
                 <Body>
                     <Title>Histórico</Title>
-                    <Subtitle>Em breve você poderá ver o histórico dos seus hábitos aqui!</Subtitle>
+                    <Text>Em breve você poderá ver o histórico dos seus hábitos aqui!</Text>
                 </Body>
                 <Menu/>
             </Container>
@@ -40,7 +40,7 @@ const Title = styled.h2`
     padding-bottom: 17px;
 `
 
-const Subtitle = styled.h3`
+const Text = styled.h3`
     font-family: 'Lexend Deca', sans-serif;
     font-weight: 400;
     font-size: 18px;

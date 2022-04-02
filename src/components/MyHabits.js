@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import axios from "axios";
 import styled from "styled-components";
 import Trashcan from '../assets/delete.png';
@@ -10,7 +10,9 @@ export default function MyHabits({ weekDays,loadHabits, habits }){
 
     const config = {headers: {Authorization: `Bearer ${token}`}}
 
-    loadHabits();
+    useEffect(() =>  {
+        loadHabits();
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     function deleteHabit(id){
         // eslint-disable-next-line no-restricted-globals
