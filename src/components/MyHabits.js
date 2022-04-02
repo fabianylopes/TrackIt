@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import axios from "axios";
 import styled from "styled-components";
-import Delete from '../assets/delete.png';
+import Trashcan from '../assets/delete.png';
 import UserContext from '../contexts/UserContext';
 
 export default function MyHabits({ weekDays,loadHabits, habits }){
@@ -27,7 +27,7 @@ export default function MyHabits({ weekDays,loadHabits, habits }){
 
     if(habits.length === 0){
         return (
-            <SubTitulo>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</SubTitulo>
+            <Text>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</Text>
         );
     }
 
@@ -35,11 +35,11 @@ export default function MyHabits({ weekDays,loadHabits, habits }){
         <>
             {habits.map(({id, name, days}) => {
                 return (
-                    <MeusHabitos key={id}>
-                         <Lixeira>
-                            <Title>{name}</Title>
-                            <img src={Delete} alt="delete-icon" onClick={() => deleteHabit(id)}/>
-                        </Lixeira>
+                    <Habits key={id}>
+                         <Title>
+                            <HabitName>{name}</HabitName>
+                            <img src={Trashcan} alt="delete-icon" onClick={() => deleteHabit(id)}/>
+                        </Title>
                         
                         <Week>
                             {weekDays.map((day, index) => 
@@ -48,14 +48,14 @@ export default function MyHabits({ weekDays,loadHabits, habits }){
                             >{day}
                             </WeekDay>)}
                         </Week>                    
-                    </MeusHabitos>
+                    </Habits>
                 );
             })}
         </>  
     );
 }
 
-const Title = styled.h3`
+const HabitName = styled.h3`
     font-family: 'Lexend Deca', sans-serif;
     font-weight: 400;
     font-size: 20px;
@@ -63,13 +63,12 @@ const Title = styled.h3`
     margin-bottom: 8px;
 `
 
-const MeusHabitos = styled.div`
+const Habits = styled.div`
     width: 340px;
     height: 90px;
     background-color: #fff;
     border-radius: 5px;
-    margin-top: 20px;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     padding: 13px 10px 15px 14px;
 `
 
@@ -90,9 +89,7 @@ const WeekDay = styled.button`
     margin-bottom: 30px;
 `
 
-
-
-const Lixeira = styled.div`
+const Title = styled.div`
     display: flex;
     justify-content: space-between;
     img {
@@ -102,7 +99,7 @@ const Lixeira = styled.div`
     }
 `
 
-const SubTitulo = styled.h3`
+const Text = styled.h3`
     font-family: 'Lexend Deca', sans-serif;
     font-weight: 400;
     font-size: 18px;

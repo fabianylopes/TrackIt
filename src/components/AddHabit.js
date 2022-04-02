@@ -66,13 +66,18 @@ export default function AddHabit({ weekDays, setOpenForm }){
             </Input>
 
             <Week>
-                {weekDays.map((day, index) => 
-                    <WeekDay
-                        key={index}
-                        disabled={loading}
-                        daysColor={selectedDays.includes(index)}
-                        onClick={() => selectDay(index)}>{day}
-                    </WeekDay>
+                {weekDays.map((day, index) => {
+                    return (
+
+                        <WeekDay
+                            key={index}
+                            disabled={loading}
+                            daysColor={selectedDays.includes(index)}
+                            onClick={() => selectDay(index)}>{day}
+                        </WeekDay>
+
+                    );
+                }
                 )}
             </Week>
 
@@ -85,12 +90,12 @@ export default function AddHabit({ weekDays, setOpenForm }){
                     Cancelar
                 </Cancel>
 
-                <Salvar 
+                <Save 
                     handleLoading={loading} 
                     disabled={loading}
                     onClick={handleHabit}>
                     {loading ? <Loading/> : 'Salvar'}                  
-                </Salvar>
+                </Save>
             </CreateHabit>
         </NewHabit>  
     );
@@ -134,7 +139,7 @@ const Cancel = styled.button`
     margin-right: 23px;
     opacity: ${({handleLoading}) => handleLoading ? 0.7 : 1};
 `
-const Salvar = styled.button`
+const Save = styled.button`
     font-family: 'Lexend Deca', sans-serif;
     background-color: #52B6FF;
     color: #fff;

@@ -15,7 +15,7 @@ export default function Menu() {
                 <Button>Hábitos</Button>
             </Link>
 
-            <Hoje>
+            <Today>
                 <Link to="/today">
                     <CircularProgressbar
                     value={progressPercentage}
@@ -30,7 +30,7 @@ export default function Menu() {
                     })}
                     />
                 </Link>
-            </Hoje>
+            </Today>
 
             <Link to="/history">
                 <Button>Histórico</Button>
@@ -61,7 +61,7 @@ const Button = styled.button`
     cursor: pointer;
 `
 
-const Hoje = styled.button`
+const Today = styled.button`
     width: 91px;
     height: 91px;
     border-radius: 50%;

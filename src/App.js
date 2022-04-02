@@ -35,6 +35,3 @@ export default function App() {
     </UserContext.Provider>
   );
 }
-
-     /*  <PercentageContext.Provider value={{ percentProgress, setPercentProgress }}>
-      </PercentageContext.Provider> */

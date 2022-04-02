@@ -60,11 +60,11 @@ export default function Today() {
         setProgressPercentage((doneNumber.length / dayHabits.length) * 100);
         
         return (
-            <SubTitulo color={progressPercentage}>
+            <Text color={progressPercentage}>
                 {doneNumber.length  === 0 ? 
                 'Nenhum hábito concluído ainda' : 
                 `${progressPercentage.toFixed(2)}% dos hábitos concluídos`}
-            </SubTitulo>
+            </Text>
         );
     }
 
@@ -72,24 +72,24 @@ export default function Today() {
         <Container>
             <Header/>
             <Body>
-                <Titulo>{date}</Titulo>
+                <Date>{date}</Date>
                 <PercentProgress/>
 
                     {dayHabits.map(({ id, done, name, currentSequence, highestSequence }) => 
                         
-                    <Habitos key={id}>
-                        <Texto>
-                            <Habito>{name}</Habito>
+                    <Habits key={id}>
+                        <Habit>
+                            <HabitName>{name}</HabitName>
                             <P>Sequência atual: {currentSequence} dias</P>
                             <P>Seu recorde: {highestSequence} dias</P>
-                        </Texto>
+                        </Habit>
                         <Check 
                             done={done}
                             color={doneNumber.includes(id)} 
                             onClick={() => handleProgress(id)}>
                             <img src={check} alt="check-icon"/>
                         </Check>
-                    </Habitos>
+                    </Habits>
                     
                     )}
 
@@ -115,7 +115,7 @@ const Body = styled.div`
     padding-left: 17px;
 `
 
-const Titulo = styled.h2`
+const Date = styled.h2`
     font-family: 'Lexend Deca', sans-serif;
     font-weight: 400;
     font-size: 23px;
@@ -123,7 +123,7 @@ const Titulo = styled.h2`
     padding-bottom: 17px;
 `
 
-const SubTitulo = styled.h3`
+const Text = styled.h3`
     font-family: 'Lexend Deca', sans-serif;
     font-weight: 400;
     font-size: 18px;
@@ -131,7 +131,7 @@ const SubTitulo = styled.h3`
     margin-bottom: 28px;
 `
 
-const Habitos = styled.div`
+const Habits = styled.div`
     width: 340px;
     height: 94px;
     background-color: #fff;
@@ -144,11 +144,11 @@ const Habitos = styled.div`
     align-items: center;
 `
 
-const Texto = styled.div`
+const Habit = styled.div`
     padding-left: 15px;
 `
 
-const Habito = styled.p`
+const HabitName = styled.p`
     font-family: 'Lexend Deca', sans-serif;
     font-weight: 400;
     font-size: 20px;

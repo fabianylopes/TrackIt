@@ -8,8 +8,8 @@ export default function History(){
             <Container>
                 <Header/>
                 <Body>
-                    <Titulo>Histórico</Titulo>
-                    <SubTitulo>Em breve você poderá ver o histórico dos seus hábitos aqui!</SubTitulo>
+                    <Title>Histórico</Title>
+                    <Subtitle>Em breve você poderá ver o histórico dos seus hábitos aqui!</Subtitle>
                 </Body>
                 <Menu/>
             </Container>
@@ -32,7 +32,7 @@ const Body = styled.div`
     padding-left: 17px;
 `
 
-const Titulo = styled.h2`
+const Title = styled.h2`
     font-family: 'Lexend Deca', sans-serif;
     font-weight: 400;
     font-size: 23px;
@@ -40,7 +40,7 @@ const Titulo = styled.h2`
     padding-bottom: 17px;
 `
 
-const SubTitulo = styled.h3`
+const Subtitle = styled.h3`
     font-family: 'Lexend Deca', sans-serif;
     font-weight: 400;
     font-size: 18px;

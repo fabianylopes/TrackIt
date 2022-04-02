@@ -28,29 +28,32 @@ export default function Habits(){
     }
 
     return (
-        <>
+
+        <Container>
             <Header/>
-            <Container>
                 <Body>
-                    <Habitos>
-                        <Titulo>Meus hábitos</Titulo>
+
+                    <Top>
+                        <Title>Meus hábitos</Title>
                         <Plus onClick={() => setOpenForm(true)}>+</Plus>
-                    </Habitos>
+                    </Top>
 
                     {openForm && <AddHabit weekDays={weekDays} setOpenForm={setOpenForm}/>}
 
                     <MyHabits loadHabits={getHabits} habits={habits} weekDays={weekDays}/>
 
                 </Body>
-            </Container>
+                
             <Menu/>
-         </>
+        </Container>
+
     );
 
 }
 const Container = styled.div`
+    width: 375px;
     height: 100vh;
-    height: 100vh;
+    padding-top: 70px;
     padding-bottom: 70px;
 
     display: flex;
@@ -64,19 +67,19 @@ const Body = styled.div`
     height: 100vh;
     background-color: #E5E5E5;
     padding-top: 98px;
-    padding-bottom: 70px;
+    padding-bottom: 170px;
     padding-left: 17px;
     padding-right: 18px;
 `
 
-const Habitos = styled.div`
+const Top = styled.div`
     margin-bottom: 30px;
     display: flex;
     align-items: center;
     justify-content: space-between;
 `
 
-const Titulo = styled.h2`
+const Title = styled.h2`
     font-family: 'Lexend Deca', sans-serif;
     font-weight: 400;
     font-size: 23px;
