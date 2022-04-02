@@ -31,8 +31,6 @@ export default function MyHabits({ weekDays }){
         // eslint-disable-next-line no-restricted-globals
         const confirmDelete = confirm('Deseja realmente deletar este hábito?');
 
-        
-
         if(confirmDelete){
 
             const promise = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`, config);
@@ -50,7 +48,7 @@ export default function MyHabits({ weekDays }){
 
     return (
         <>
-            {habits.map(({id, name}) => {
+            {habits.map(({id, name, days}) => {
                 return (
                     <MeusHabitos key={id}>
                          <Lixeira>
@@ -60,7 +58,9 @@ export default function MyHabits({ weekDays }){
                         
                         <Week>
                             {weekDays.map((day, index) => 
-                            <WeekDay key={index}> {day}
+                            <WeekDay key={index}
+                                daysColor={days.includes(index)}
+                            >{day}
                             </WeekDay>)}
                         </Week>                    
                     </MeusHabitos>
@@ -96,8 +96,8 @@ const WeekDay = styled.button`
     width: 30px;
     height: 30px;
     border-radius: 5px;
-    background-color: ${({daysColor}) => daysColor ? "#F2F2F2" : "#FFFFFF"};
-    color: ${({daysColor}) => daysColor ? "#AFAFAF" : "#000"};
+    background-color: ${({daysColor}) => daysColor ? '#DBDBDB' : '#fff'};
+    color: ${({daysColor}) => daysColor ? '#fff' : '#DBDBDB'};
     border: 1px solid #D5D5D5;
     font-family: 'Lexend Deca', sans-serif;
     font-size: 20px;

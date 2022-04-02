@@ -5,7 +5,7 @@ import axios from "axios";
 import Loading from './Loading';
 
 
-export default function AddHabit({ weekDays, openForm, setOpenForm }){
+export default function AddHabit({ weekDays, setOpenForm }){
     
     const { token, loading, setLoading } = useContext(UserContext);
         
@@ -14,7 +14,9 @@ export default function AddHabit({ weekDays, openForm, setOpenForm }){
     const [habitName, setHabitName] = useState('');
     const [selectedDays, setSelectedDays] = useState([]);
     
-    function selectDay(day){      
+    function selectDay(day){     
+        
+        console.log('hello there');
 
         if(selectedDays.includes(day)){
             setSelectedDays(selectedDays.filter(f => f === day ? false : true));
@@ -29,28 +31,27 @@ export default function AddHabit({ weekDays, openForm, setOpenForm }){
     const body = {name: habitName, days: selectedDays}
     const config = {headers: {Authorization: `Bearer ${token}`}}
 
-    function handleHabit(e){
-        e.preventDefault();
+    function handleHabit(){
 
         setLoading(true);
 
         const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", body, config);
 
         promise.then(handleSuccess);
-        promise.catch(handleFailure);
+        promise.catch(error => console.log(error));
     }
 
     function handleSuccess(){
         setHabitName('');
         setSelectedDays([]);
-        setOpenForm(!openForm)
+        setOpenForm(false)
     }
 
-    function handleFailure(error){
+    /* function handleFailure(error){
         setHabitName('');
         setLoading(false);
         alert(error.response.data.message);
-    }
+    } */
 
     return (
         <NewHabit>
@@ -80,7 +81,8 @@ export default function AddHabit({ weekDays, openForm, setOpenForm }){
                     type="button"
                     handleLoading={loading} 
                     disabled={loading}
-                    onClick={() => setOpenForm(!openForm)}>Cancelar
+                    onClick={() => setOpenForm(false)}>
+                    Cancelar
                 </Cancel>
 
                 <Salvar 

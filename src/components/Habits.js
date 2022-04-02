@@ -11,10 +11,6 @@ export default function Habits(){
 
     const weekDays = ["D", "S", "T", "Q", "Q", "S", "S"];
 
-    function showForm(){
-        setOpenForm(!openForm);
-    }
-
     return (
         <>
             <Header/>
@@ -22,10 +18,12 @@ export default function Habits(){
                 <Body>
                     <Habitos>
                         <Titulo>Meus hábitos</Titulo>
-                        <Plus onClick={showForm}>+</Plus>
+                        <Plus onClick={() => setOpenForm(true)}>+</Plus>
                     </Habitos>
 
-                    {openForm ? <AddHabit weekDays={weekDays} openForm={openForm} setOpenForm={setOpenForm}/> : <MyHabits weekDays={weekDays}/>}
+                    {openForm && <AddHabit weekDays={weekDays} setOpenForm={setOpenForm}/>}
+
+                    <MyHabits weekDays={weekDays}/>
 
                 </Body>
             </Container>

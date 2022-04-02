@@ -59,7 +59,7 @@ export default function Today() {
         setProgressPercentage((doneNumber.length / dayHabits.length) * 100);
         
         return (
-            <SubTitulo>
+            <SubTitulo color={progressPercentage}>
                 {doneNumber.length  === 0 ? 
                 'Nenhum hábito concluído ainda' : 
                 `${progressPercentage.toFixed(2)}% dos hábitos concluídos`}
