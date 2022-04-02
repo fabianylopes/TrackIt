@@ -5,38 +5,29 @@ import axios from "axios";
 import Loading from './Loading';
 
 
-export default function AddHabit({ form, setForm }){
+export default function AddHabit({ weekDays, openForm, setOpenForm }){
     
     const { token, loading, setLoading } = useContext(UserContext);
-    
-    const weekDays = ["D", "S", "T", "Q", "Q", "S", "S"];
-    
+        
     setLoading(false);
-
 
     const [habitName, setHabitName] = useState('');
     const [selectedDays, setSelectedDays] = useState([]);
     
-    function selectDay(day){
-        
+    function selectDay(day){      
+
         if(selectedDays.includes(day)){
-            setSelectedDays(selectedDays.filter(f => (f === day) ? false : true));
+            setSelectedDays(selectedDays.filter(f => f === day ? false : true));
         } else {
             setSelectedDays([...selectedDays, day]);
-        }
-        
-    }
-    
-    const config = {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
+        }     
+
     }
 
-    const body = {
-        name: habitName,
-        days: selectedDays
-    }
+    console.log(selectedDays)
+    
+    const body = {name: habitName, days: selectedDays}
+    const config = {headers: {Authorization: `Bearer ${token}`}}
 
     function handleHabit(e){
         e.preventDefault();
@@ -52,53 +43,58 @@ export default function AddHabit({ form, setForm }){
     function handleSuccess(){
         setHabitName('');
         setSelectedDays([]);
-        setForm(!form)
+        setOpenForm(!openForm)
     }
 
     function handleFailure(error){
         setHabitName('');
-        alert(error.response.data.message);
         setLoading(false);
+        alert(error.response.data.message);
     }
 
     return (
         <NewHabit>
-        <Input 
-            disabled={loading}
-            type="text" 
-            placeholder="nome do hábito" 
-            value={habitName || ''} 
-            onChange={e => setHabitName(e.target.value)}
-            handleLoading={loading}
-        >    
-        </Input>
+            <Input 
+                type="text" 
+                placeholder="nome do hábito" 
+                disabled={loading}
+                handleLoading={loading}
+                value={habitName || ''} 
+                onChange={e => setHabitName(e.target.value)}
+            >    
+            </Input>
 
-        <Week>
-            {weekDays.map((day, index) => 
-                <WeekDay
+            <Week>
+                {weekDays.map((day, index) => 
+                    <WeekDay
+                        key={index}
+                        disabled={loading}
+                        daysColor={selectedDays.includes(index)}
+                        onClick={() => selectDay(index)}>{day}
+                    </WeekDay>
+                )}
+            </Week>
+
+            <CreateHabit>
+                <Cancel 
+                    type="button"
+                    handleLoading={loading} 
                     disabled={loading}
-                    key={index}
-                    days={selectedDays.includes(index)}
-                    onClick={() => selectDay(index)}>{day}
-                </WeekDay>
-            )}
-        </Week>
+                    onClick={() => setOpenForm(!openForm)}>Cancelar
+                </Cancel>
 
-        <CreateHabit>
-            <Cancel onClick={() => setForm(!form)} handleLoading={loading} disabled={loading}>Cancelar</Cancel>
-            <Salvar onClick={handleHabit} handleLoading={loading} disabled={loading}>
-                
-                {loading ? <Loading/> : 'Salvar'}
-                
-                
-            </Salvar>
-        </CreateHabit>
-
+                <Salvar 
+                    handleLoading={loading} 
+                    disabled={loading}
+                    onClick={handleHabit}>
+                    {loading ? <Loading/> : 'Salvar'}                  
+                </Salvar>
+            </CreateHabit>
         </NewHabit>  
     );
 }
 
-const NewHabit = styled.div`
+const NewHabit = styled.form`
     width: 340px;
     height: 180px;
     background-color: #fff;
@@ -117,8 +113,8 @@ const Input = styled.input`
     font-size: 20px;
     font-weight: 400;
     outline: 0;
-    background-color: ${(props) => props.handleLoading ? "#F2F2F2" : "#FFFFFF"};
-    color: ${(props) => props.handleLoading ? "#AFAFAF" : "#000"};
+    background-color: ${({handleLoading}) => handleLoading ? "#F2F2F2" : "#FFFFFF"};
+    color: ${({handleLoading}) => handleLoading ? "#AFAFAF" : "#000"};
     ::placeholder{
         color: #DBDBDB;
     }
@@ -134,7 +130,7 @@ const Cancel = styled.button`
     font-size: 16px;
     cursor: pointer;
     margin-right: 23px;
-    opacity: ${(props) => props.handleLoading ? 0.7 : 1};
+    opacity: ${({handleLoading}) => handleLoading ? 0.7 : 1};
 `
 const Salvar = styled.button`
     font-family: 'Lexend Deca', sans-serif;
@@ -147,7 +143,7 @@ const Salvar = styled.button`
     font-size: 16px;
     text-align: center;
     cursor: pointer;
-    opacity: ${(props) => props.handleLoading ? 0.7 : 1};
+    opacity: ${({handleLoading}) => handleLoading ? 0.7 : 1};
 `
 
 const CreateHabit = styled.div`
@@ -164,8 +160,8 @@ const WeekDay = styled.button`
     width: 30px;
     height: 30px;
     border-radius: 5px;
-    background-color: ${({days}) => days ? '#DBDBDB' : '#fff'};
-    color: ${({days}) => days ? '#fff' : '#DBDBDB'};
+    background-color: ${({daysColor}) => daysColor ? '#DBDBDB' : '#fff'};
+    color: ${({daysColor}) => daysColor ? '#fff' : '#DBDBDB'};
     border: 1px solid #D5D5D5;
     font-family: 'Lexend Deca', sans-serif;
     font-size: 20px;

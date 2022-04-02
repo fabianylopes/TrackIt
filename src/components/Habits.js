@@ -7,12 +7,12 @@ import MyHabits from './MyHabits';
 
 export default function Habits(){
 
-    const [form, setForm] = useState(false);
+    const [openForm, setOpenForm] = useState(false);
+
+    const weekDays = ["D", "S", "T", "Q", "Q", "S", "S"];
 
     function showForm(){
-        if(!form){
-            setForm(!form);
-          }
+        setOpenForm(!openForm);
     }
 
     return (
@@ -25,7 +25,7 @@ export default function Habits(){
                         <Plus onClick={showForm}>+</Plus>
                     </Habitos>
 
-                    {form ? <AddHabit form={form} setForm={setForm}/> : <MyHabits/>}
+                    {openForm ? <AddHabit weekDays={weekDays} openForm={openForm} setOpenForm={setOpenForm}/> : <MyHabits weekDays={weekDays}/>}
 
                 </Body>
             </Container>
@@ -35,6 +35,7 @@ export default function Habits(){
 
 }
 const Container = styled.div`
+    height: 100vh;
     height: 100vh;
     padding-bottom: 70px;
 

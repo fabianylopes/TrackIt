@@ -3,24 +3,16 @@ import axios from "axios";
 import styled from "styled-components";
 import Delete from '../assets/delete.png';
 import UserContext from '../contexts/UserContext';
-import Habits from './Habits';
 
-export default function MyHabits(){
-
-    const weekDays = ["D", "S", "T", "Q", "Q", "S", "S"];
+export default function MyHabits({ weekDays }){
 
     const { token } = useContext(UserContext);
 
     const [habits, setHabits] = useState([])
 
-    const [habitDays, setHabitDays] = useState([]);
+    //const [habitDays, setHabitDays] = useState([]);
 
-    const config = {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    }
-
+    const config = {headers: {Authorization: `Bearer ${token}`}}
 
     useEffect(() => {
 
@@ -29,19 +21,17 @@ export default function MyHabits(){
         promise.then(handleSuccess);
         promise.catch(error => console.log(error.response));
 
-	}, []);
+	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     function handleSuccess(response){
         setHabits(response.data);
-        setHabitDays(response.data.days);
     }
-
-    console.log(habitDays);
-
 
     function deleteHabit(id){
         // eslint-disable-next-line no-restricted-globals
         const confirmDelete = confirm('Deseja realmente deletar este hábito?');
+
+        
 
         if(confirmDelete){
 
@@ -52,7 +42,6 @@ export default function MyHabits(){
         }
     }
 
-
     if(habits.length === 0){
         return (
             <SubTitulo>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</SubTitulo>
@@ -61,7 +50,7 @@ export default function MyHabits(){
 
     return (
         <>
-            {habits.map(({ id, name }) => {
+            {habits.map(({id, name}) => {
                 return (
                     <MeusHabitos key={id}>
                          <Lixeira>
@@ -70,14 +59,10 @@ export default function MyHabits(){
                         </Lixeira>
                         
                         <Week>
-                            {weekDays.map(day => 
-                            <WeekDay
-                                
-                                days={habitDays.includes(id)}
-                            >{day}
+                            {weekDays.map((day, index) => 
+                            <WeekDay key={index}> {day}
                             </WeekDay>)}
-                        </Week>
-                    
+                        </Week>                    
                     </MeusHabitos>
                 );
             })}
@@ -111,8 +96,8 @@ const WeekDay = styled.button`
     width: 30px;
     height: 30px;
     border-radius: 5px;
-    background-color: ${(props) => props.days ? "#F2F2F2" : "#FFFFFF"};
-    color: ${(props) => props.days ? "#AFAFAF" : "#000"};
+    background-color: ${({daysColor}) => daysColor ? "#F2F2F2" : "#FFFFFF"};
+    color: ${({daysColor}) => daysColor ? "#AFAFAF" : "#000"};
     border: 1px solid #D5D5D5;
     font-family: 'Lexend Deca', sans-serif;
     font-size: 20px;

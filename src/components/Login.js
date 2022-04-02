@@ -1,4 +1,4 @@
-import { useContext} from 'react';
+import { useEffect, useContext} from 'react';
 import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router';
 import Logo from '../assets/logo.png';
@@ -10,7 +10,13 @@ import Loading from './Loading';
 export default function Login() {
   const navigate = useNavigate();
 
-  const { setToken, userInfo, setUserInfo, loading, setLoading } = useContext(UserContext);
+  const { token, setToken, userInfo, setUserInfo, loading, setLoading } = useContext(UserContext);
+
+  useEffect(() => {
+    if(token){
+      navigate('/today');
+    }
+  }, []);
 
   function handleLogin(e){
     e.preventDefault();
@@ -31,7 +37,11 @@ export default function Login() {
 
   function handleSuccess(response){
     setToken(response.data.token);
-    setUserInfo({...userInfo, image: response.data.image});
+    setUserInfo(response.data);
+   
+    localStorage.setItem('token', response.data.token);
+    localStorage.setItem('userInfo', JSON.stringify(response.data));
+
     navigate('/today');
   }
   

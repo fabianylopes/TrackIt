@@ -7,23 +7,19 @@ import check from '../assets/check.png';
 import dayjs from "dayjs";
 import 'dayjs/locale/pt-br';
 import UserContext from '../contexts/UserContext';
+import PercentageContext from '../contexts/PercentageContext';
 
 export default function Today() {
     let date = dayjs().locale('pt-br').format('dddd, DD/MM');
 
+    const { progressPercentage, setProgressPercentage } = useContext(PercentageContext);
     const { token } = useContext(UserContext);
 
     const [dayHabits, setdayHabits] = useState([]);
 
     const [doneNumber, setDoneNumber] = useState([]);
 
-  
-
-    const config = {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    }
+    const config = {headers: {Authorization: `Bearer ${token}`}}
 
     useEffect(() => {
         const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today", config);
@@ -45,39 +41,38 @@ export default function Today() {
             setDoneNumber([...doneNumber, id]);
         }
 
-        const config = {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        }
+        const config = {headers: {Authorization: `Bearer ${token}`}}
         
-        const promise = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`, undefined, config);
+        const promise = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`, '', config);
 
         promise.then(response => console.log(response));
         promise.catch(error => console.log(error.response.data.message));
 
     }
 
-    function Progress(){
+    function PercentProgress(){
 
-        let percent = (100 * doneNumber.length) / (dayHabits.length);
-
-        return doneNumber.length === 0 ? 
-        (
-            <SubTitulo color={doneNumber.length}>Nenhum hábito concluído ainda</SubTitulo>
-        ) : (
-            <SubTitulo color={doneNumber.length}>{`${percent.toFixed(2)}% dos hábitos concluídos`}</SubTitulo>          
-        )
+        if(doneNumber.length  === 0){
+            setProgressPercentage(0);
+        }
+        
+        setProgressPercentage((doneNumber.length / dayHabits.length) * 100);
+        
+        return (
+            <SubTitulo>
+                {doneNumber.length  === 0 ? 
+                'Nenhum hábito concluído ainda' : 
+                `${progressPercentage.toFixed(2)}% dos hábitos concluídos`}
+            </SubTitulo>
+        );
     }
-
-
 
     return (
         <Container>
             <Header/>
             <Body>
                 <Titulo>{date}</Titulo>
-                <Progress/>
+                <PercentProgress/>
 
                     {dayHabits.map(({ id, done, name, currentSequence, highestSequence }) => 
                         

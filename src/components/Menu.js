@@ -1,41 +1,42 @@
-
+import { useContext} from 'react';
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import PercentageContext from '../contexts/PercentageContext';
 
 export default function Menu() {
 
-    const percentage = 67;
+    const { progressPercentage } = useContext(PercentageContext);
 
-  return (
-    <MenuBar>
-        <Link to="/habits">
-            <Button>Hábitos</Button>
-        </Link>
-
-        <Hoje>
-            <Link to="/today">
-                <CircularProgressbar
-                value={percentage}
-                text={"Hoje"}
-                background
-                backgroundPadding={4}
-                styles={buildStyles({
-                    backgroundColor: "#52B6FF",
-                    textColor: "#fff",
-                    pathColor: "#fff",
-                    trailColor: "transparent"
-                })}
-                />
+    return (
+        <MenuBar>
+            <Link to="/habits">
+                <Button>Hábitos</Button>
             </Link>
-        </Hoje>
 
-        <Link to="/history">
-            <Button>Histórico</Button>
-        </Link>
-    </MenuBar>
-  );
+            <Hoje>
+                <Link to="/today">
+                    <CircularProgressbar
+                    value={progressPercentage}
+                    text={"Hoje"}
+                    background
+                    backgroundPadding={4}
+                    styles={buildStyles({
+                        backgroundColor: "#52B6FF",
+                        textColor: "#fff",
+                        pathColor: "#fff",
+                        trailColor: "transparent"
+                    })}
+                    />
+                </Link>
+            </Hoje>
+
+            <Link to="/history">
+                <Button>Histórico</Button>
+            </Link>
+        </MenuBar>
+    );
 }
 
 const MenuBar = styled.div`
