@@ -19,7 +19,6 @@ export default function Today() {
     const [dayHabits, setdayHabits] = useState([]);
     const [doneNumber, setDoneNumber] = useState([]);
 
-
     function loadHabits(){
 
         const promise = api.getTodayHabits(token);
@@ -30,18 +29,12 @@ export default function Today() {
 
     function handleSuccess(response){
         setdayHabits(response.data);
-        setDoneNumber(response.data.length);
+        setDoneNumber(response.data.length);   
     }
 
     useEffect(loadHabits, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     function handleCheck(id, done){
-
-        if(doneNumber.includes(id)){
-            setDoneNumber(doneNumber.filter(f => (f === id) ? false : true));
-        } else {
-            setDoneNumber([...doneNumber, id]);
-        }
 
         if(done){
             const promise = api.uncheckHabit(id, token);
@@ -58,7 +51,11 @@ export default function Today() {
 
     }
 
-    console.log(doneNumber);
+    /* if(dayHabits.done){
+        setDoneNumber(doneNumber.filter(f => (f === id) ? false : true));
+    } else {
+        setDoneNumber([...doneNumber, dayHabits.id]);
+    } */
 
 
     return (
@@ -82,7 +79,7 @@ export default function Today() {
                         <Text>Seu recorde: {highestSequence} dias</Text>
                     </Habit>
                     <Check 
-                        done={done}                       
+                        done={done}
                         onClick={() => handleCheck(id, done)}>
                         <img src={check} alt="check-icon"/>
                     </Check>

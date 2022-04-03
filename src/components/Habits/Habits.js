@@ -1,12 +1,11 @@
 import { Container, Body, Top, Title, Plus } from './style';
 import { useState, useContext } from 'react';
 import UserContext from '../../contexts/UserContext';
-
+import Header from '../Header';
 import Menu from '../Menu';
 import AddHabit from './AddHabit';
 import MyHabits from './MyHabits';
 import api from '../../services/api';
-import Header from '../Header';
 
 export default function Habits(){
 
