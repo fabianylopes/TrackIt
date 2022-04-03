@@ -1,21 +1,4 @@
 import styled from "styled-components";
-import Header from "./Header";
-import Menu from "./Menu";
-
-export default function History(){
-    return (
-        <>
-            <Container>
-                <Header/>
-                <Body>
-                    <Title>Histórico</Title>
-                    <Text>Em breve você poderá ver o histórico dos seus hábitos aqui!</Text>
-                </Body>
-                <Menu/>
-            </Container>
-        </>
-    );
-}
 
 const Container = styled.div`
     display: flex;
@@ -46,3 +29,10 @@ const Text = styled.h3`
     font-size: 18px;
     color: #666666;
 `
+
+export {
+    Container,
+    Body,
+    Title,
+    Text
+}
