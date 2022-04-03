@@ -1,18 +1,4 @@
 import styled from "styled-components";
-import { useContext } from 'react';
-import UserContext from "../contexts/UserContext";
-
-export default function Header() {
-    
-    const { userInfo } = useContext(UserContext);
-
-  return (
-    <Head>
-        <Logo>TrackIt</Logo>
-        <Image src={userInfo.image}></Image>
-    </Head>
-  );
-}
 
 const Head = styled.div`
     width: 375px;
@@ -26,6 +12,13 @@ const Head = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    img {
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+        border-radius: 50%;
+    }
 `
 
 const Logo = styled.p`
@@ -34,9 +27,7 @@ const Logo = styled.p`
     font-size: 39px;
 `
 
-const Image = styled.img`
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    border-radius: 50%;
-`
+export {
+    Head,
+    Logo,
+}
