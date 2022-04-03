@@ -60,7 +60,7 @@ const Text = styled.p`
 const Check = styled.button`
     width: 70px;
     height: 70px;
-    background-color: ${({ $color }) => $color ? '#8FC549' : '#EBEBEB'};
+    background-color: ${({ done }) => done ? '#8FC549' : '#EBEBEB'};
     border-radius: 5px;
     display: flex;
     justify-content: center;

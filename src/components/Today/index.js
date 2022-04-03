@@ -1,13 +1,13 @@
 import { Container, Body, Date, Habits, Habit, HabitName, Text, Check }from './style';
 import { useState, useEffect, useContext } from 'react';
+import PercentageContext from '../../contexts/PercentageContext';
+import UserContext from '../../contexts/UserContext';
 import dayjs from "dayjs";
 import 'dayjs/locale/pt-br';
+import PercentProgress from '../PercentProgress';
 import Menu from '../Menu';
 import Header from '../Header';
-import UserContext from '../../contexts/UserContext';
-import PercentageContext from '../../contexts/PercentageContext';
 import check from '../../assets/check.png';
-import PercentProgress from '../PercentProgress';
 import api from '../../services/api';
 
 export default function Today() {
@@ -24,18 +24,31 @@ export default function Today() {
 
         const promise = api.getTodayHabits(token);
     
-        promise.then(response => setdayHabits(response.data));
+        promise.then(handleSuccess);
         promise.catch(error => console.log(error));
+    }
+
+    function handleSuccess(response){
+        setdayHabits(response.data);
+        setDoneNumber(response.data.length);
     }
 
     useEffect(loadHabits, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-    function handleCheck(id){
+    function handleCheck(id, done){
 
         if(doneNumber.includes(id)){
             setDoneNumber(doneNumber.filter(f => (f === id) ? false : true));
         } else {
             setDoneNumber([...doneNumber, id]);
+        }
+
+        if(done){
+            const promise = api.uncheckHabit(id, token);
+
+            promise.then(() => loadHabits());
+
+            return;
         }
         
         const promise = api.checkHabit(id, token);
@@ -44,6 +57,9 @@ export default function Today() {
         promise.catch(error => console.log(error.response.data.message));
 
     }
+
+    console.log(doneNumber);
+
 
     return (
         <Container>
@@ -66,9 +82,8 @@ export default function Today() {
                         <Text>Seu recorde: {highestSequence} dias</Text>
                     </Habit>
                     <Check 
-                        done={done}
-                        $color={doneNumber.includes(id)} 
-                        onClick={() => handleCheck(id)}>
+                        done={done}                       
+                        onClick={() => handleCheck(id, done)}>
                         <img src={check} alt="check-icon"/>
                     </Check>
                 </Habits>
