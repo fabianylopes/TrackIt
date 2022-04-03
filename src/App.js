@@ -2,19 +2,19 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState } from 'react';
 import UserContext from "./contexts/UserContext";
 import PercentageContext from './contexts/PercentageContext';
-import Login from "./components/Login";
-import Register from "./components/Register";
 import Today from "./components/Today";
-import Habits from "./components/Habits";
+import Habits from "./components/Habits/Habits";
 import History from "./components/History";
+import Login from './components/Home/Login';
+import Register from './components/Home/Register';
 
 export default function App() {
 
-  const initialToken = localStorage.getItem('token');
-  const initialUserInfo = localStorage.getItem('userInfo');
+/*   const initialToken = localStorage.getItem('token');
+  const initialUserInfo = localStorage.getItem('userInfo'); */
 
-  const [token, setToken] = useState(initialToken);
-  const [userInfo, setUserInfo] = useState(JSON.parse(initialUserInfo));
+  const [token, setToken] = useState('');
+  const [userInfo, setUserInfo] = useState({});
 
   const [loading, setLoading] = useState(false);
   const [progressPercentage, setProgressPercentage] = useState('');
