@@ -53,7 +53,7 @@ const Subtitle = styled.h3`
     font-family: 'Lexend Deca', sans-serif;
     font-weight: 400;
     font-size: 18px;
-    color: ${({ Textcolor }) => Textcolor === 0 ? '#BABABA' : '#8FC549'};
+    color: ${({ done }) => done === 0 ? '#BABABA' : '#8FC549'};
     margin-bottom: 28px;
 `
 

@@ -8,6 +8,7 @@ import Menu from '../Menu';
 import Header from '../Header';
 import check from '../../assets/check.png';
 import api from '../../services/api';
+import Loading from '../Loading';
 
 export default function Today() {
     let date = dayjs().locale('pt-br').format('dddd, DD/MM');
@@ -18,20 +19,32 @@ export default function Today() {
     const [dayHabits, setdayHabits] = useState([]);
     const [doneNumber, setDoneNumber] = useState([]);
 
+    useEffect(() => loadHabits(), []); // eslint-disable-line react-hooks/exhaustive-deps
+
     function loadHabits(){
 
         const promise = api.getTodayHabits(token);
     
-        promise.then(handleSuccess);
+        promise.then(response => {
+            setdayHabits(response.data);  
+
+            setDoneNumber(dayHabits.filter(habit => habit.done));
+            updateProgressBar(doneNumber.length, dayHabits.length);
+        });
+
         promise.catch(error => console.log(error));
     }
 
-    function handleSuccess(response){
-        setdayHabits(response.data);
-        setDoneNumber(response.data.length);   
+    function updateProgressBar(done, total){
+
+        if(done  === 0){
+            setProgressBar(0);
+        }  
+
+        setProgressBar((done / total) * 100);
+
     }
 
-    useEffect(loadHabits, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     function handleCheck(id, done){
 
@@ -50,20 +63,9 @@ export default function Today() {
 
     }
 
-    /* if(dayHabits.done){
-        setDoneNumber(doneNumber.filter(f => (f === id) ? false : true));
-    } else {
-        setDoneNumber([...doneNumber, dayHabits.id]);
-    } 
-    
-        if(doneNumber.length  === 0){
-        setProgressBar(0);
+    if(dayHabits.length === 0){
+        return <Loading color={'#52B6FF'}/>
     }
-    
-    setProgressBar((doneNumber.length / dayHabits.length) * 100);
-    
-    */
-
 
     return (
         <Container>
@@ -71,7 +73,7 @@ export default function Today() {
             <Body>
                 <Date>{date}</Date>
 
-                <Subtitle Textcolor={progressBar}>
+                <Subtitle done={doneNumber.length}>
                     {doneNumber.length  === 0 ? 
                     'Nenhum hábito concluído ainda' : 
                     `${progressBar.toFixed(0)}% dos hábitos concluídos`}

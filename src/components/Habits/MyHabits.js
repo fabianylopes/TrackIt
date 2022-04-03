@@ -1,16 +1,23 @@
 import { Week, WeekDay, HabitName, Habits, TitleHabit, Text } from './style';
-import { useContext, useEffect } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import Trashcan from '../../assets/delete.png';
 import UserContext from '../../contexts/UserContext';
 import api from '../../services/api';
 
-export default function MyHabits({ weekDays,loadHabits, habits }){
+export default function MyHabits({ weekDays }){
 
     const { token } = useContext(UserContext);
 
-    useEffect(() =>  {
-        loadHabits();
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    const [habits, setHabits] = useState([]);
+
+    function loadHabits(){
+        const promise = api.listHabits(token);
+        
+        promise.then(response => setHabits(response.data));
+        promise.catch(error => console.log(error));
+    }
+
+    useEffect(() => loadHabits(), []); // eslint-disable-line react-hooks/exhaustive-deps
 
     function deleteHabit(id){
         // eslint-disable-next-line no-restricted-globals

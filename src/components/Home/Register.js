@@ -89,7 +89,7 @@ export default function Register() {
                     disabled={loading} 
                     handleLoading={loading}
                 >
-                    {loading ? <Loading/> : 'Cadastrar'}
+                    {loading ? <Loading color={'#fff'}/> : 'Cadastrar'}
                 </Button>
             </Form>
             <StyledLink to="/">Já tem uma conta? Faça login!</StyledLink>

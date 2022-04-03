@@ -86,7 +86,7 @@ export default function AddHabit({ weekDays, setOpenForm }){
                     handleLoading={loading} 
                     disabled={loading}
                     onClick={handleHabit}>
-                    {loading ? <Loading/> : 'Salvar'}                  
+                    {loading ? <Loading color={'#fff'}/> : 'Salvar'}                  
                 </Save>
             </CreateHabit>
         </NewHabit>  

@@ -1,4 +1,5 @@
 import { Container, Body, Title, Text } from './style';
+import { useContext } from 'react';
 import PercentageContext from '../../contexts/PercentageContext';
 import Menu from '../Menu';
 import Header from '../Header';
