@@ -2,9 +2,9 @@ import { Container, Form, Input, Button, StyledLink } from '../Home/style';
 import { useContext} from 'react';
 import { useNavigate } from 'react-router';
 import UserContext from '../../contexts/UserContext';
-import Loading from '../Loading';
 import Logo from '../../assets/logo.png';
 import api from '../../services/api';
+import Loading from '../Loading';
 
 export default function Login() {
   const navigate = useNavigate();
