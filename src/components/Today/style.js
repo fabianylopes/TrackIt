@@ -49,6 +49,14 @@ const HabitName = styled.p`
     padding-bottom: 6px;
 `
 
+const Subtitle = styled.h3`
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    color: ${({ Textcolor }) => Textcolor === 0 ? '#BABABA' : '#8FC549'};
+    margin-bottom: 28px;
+`
+
 const Text = styled.p`
     font-family: 'Lexend Deca', sans-serif;
     font-weight: 400;
@@ -77,5 +85,6 @@ export {
     Habit,
     HabitName,
     Text,
+    Subtitle,
     Check
 }

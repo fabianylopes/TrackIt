@@ -1,10 +1,9 @@
-import { Container, Body, Date, Habits, Habit, HabitName, Text, Check }from './style';
+import { Container, Body, Date, Habits, Habit, HabitName, Subtitle, Text, Check }from './style';
 import { useState, useEffect, useContext } from 'react';
 import PercentageContext from '../../contexts/PercentageContext';
 import UserContext from '../../contexts/UserContext';
 import dayjs from "dayjs";
 import 'dayjs/locale/pt-br';
-import PercentProgress from '../PercentProgress';
 import Menu from '../Menu';
 import Header from '../Header';
 import check from '../../assets/check.png';
@@ -13,7 +12,7 @@ import api from '../../services/api';
 export default function Today() {
     let date = dayjs().locale('pt-br').format('dddd, DD/MM');
 
-    const { progressPercentage, setProgressPercentage } = useContext(PercentageContext);
+    const { progressBar, setProgressBar } = useContext(PercentageContext);
     const { token } = useContext(UserContext);
 
     const [dayHabits, setdayHabits] = useState([]);
@@ -55,7 +54,15 @@ export default function Today() {
         setDoneNumber(doneNumber.filter(f => (f === id) ? false : true));
     } else {
         setDoneNumber([...doneNumber, dayHabits.id]);
-    } */
+    } 
+    
+        if(doneNumber.length  === 0){
+        setProgressBar(0);
+    }
+    
+    setProgressBar((doneNumber.length / dayHabits.length) * 100);
+    
+    */
 
 
     return (
@@ -63,12 +70,12 @@ export default function Today() {
             <Header/>
             <Body>
                 <Date>{date}</Date>
-                <PercentProgress 
-                    done={doneNumber.length} 
-                    total={dayHabits.length} 
-                    percent={progressPercentage} 
-                    setPercent={setProgressPercentage}
-                />
+
+                <Subtitle Textcolor={progressBar}>
+                    {doneNumber.length  === 0 ? 
+                    'Nenhum hábito concluído ainda' : 
+                    `${progressBar.toFixed(0)}% dos hábitos concluídos`}
+                </Subtitle>
 
                 {dayHabits.map(({ id, done, name, currentSequence, highestSequence }) => 
                     
@@ -88,7 +95,7 @@ export default function Today() {
                 )}
 
             </Body>
-            <Menu/>
+            <Menu progressBar={progressBar}/>
         </Container>
     );
 }

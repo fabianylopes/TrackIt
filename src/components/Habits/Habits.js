@@ -1,6 +1,7 @@
 import { Container, Body, Top, Title, Plus } from './style';
 import { useState, useContext } from 'react';
 import UserContext from '../../contexts/UserContext';
+import PercentageContext from '../../contexts/PercentageContext';
 import Header from '../Header';
 import Menu from '../Menu';
 import AddHabit from './AddHabit';
@@ -12,6 +13,7 @@ export default function Habits(){
     const weekDays = ["D", "S", "T", "Q", "Q", "S", "S"];
     
     const { token } = useContext(UserContext);
+    const { progressBar } = useContext(PercentageContext);
 
     const [openForm, setOpenForm] = useState(false);
     const [habits, setHabits] = useState([]);
@@ -40,7 +42,7 @@ export default function Habits(){
                     <MyHabits loadHabits={getHabits} habits={habits} weekDays={weekDays}/>
 
                 </Body>                
-            <Menu/>
+            <Menu progressBar={progressBar}/>
         </Container>
 
     );
