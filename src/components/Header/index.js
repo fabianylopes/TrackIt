@@ -9,7 +9,7 @@ export default function Header() {
   return (
     <Head>
         <Logo>TrackIt</Logo>
-        <img src={userInfo.image} alt="logo"/>
+        <img src={userInfo.image} alt=""/>
     </Head>
   );
 }

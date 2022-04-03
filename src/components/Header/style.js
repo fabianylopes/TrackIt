@@ -18,6 +18,8 @@ const Head = styled.div`
         height: 50px;
         object-fit: cover;
         border-radius: 50%;
+        border: solid #fff 2px;
+        cursor: pointer;
     }
 `
 
