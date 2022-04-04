@@ -1,4 +1,4 @@
-import { Container, Body, Date, Habits, Habit, HabitName, Subtitle, Text, CurrentDays, Record, Check }from './style';
+import { Container, Body, Date, Habits, Habit, HabitName, Subtitle, Text, CurrentDays, Highest, Check }from './style';
 import { useState, useEffect, useContext } from 'react';
 import PercentageContext from '../../contexts/PercentageContext';
 import UserContext from '../../contexts/UserContext';
@@ -37,15 +37,11 @@ export default function Today() {
     }
 
     function updateProgressBar(done, total){
-
         if(done  === 0){
             setProgressBar(0);
         }  
-
         setProgressBar((done / total) * 100);
-
     }
-
 
     function handleCheck(id, done){
 
@@ -81,14 +77,13 @@ export default function Today() {
                 <Habits key={id}>
                     <Habit>
                         <HabitName>{name}</HabitName>
-                        <Text>Sequência atual: </Text>
-                        <CurrentDays current={currentSequence}>{currentSequence} dias</CurrentDays>
-                        <Text>Seu recorde:</Text>
-                        <Record current={currentSequence} record={highestSequence}>{highestSequence} dias</Record>
+                        <Text>Sequência atual: <CurrentDays current={currentSequence}>{currentSequence} dias</CurrentDays></Text>                 
+                        <Text>Seu recorde: <Highest current={currentSequence} highest={highestSequence}>{highestSequence} dias</Highest></Text>
                     </Habit>
                     <Check 
                         done={done}
-                        onClick={() => handleCheck(id, done)}>
+                        onClick={() => handleCheck(id, done)}
+                    >
                         <img src={check} alt="check-icon"/>
                     </Check>
                 </Habits>

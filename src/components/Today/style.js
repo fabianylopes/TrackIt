@@ -67,7 +67,7 @@ const Text = styled.p`
     padding-bottom: 2px;
 `
 
-const CurrentDays = styled.h4`
+const CurrentDays = styled.span`
     font-family: 'Lexend Deca', sans-serif;
     font-weight: 400;
     font-size: 13px;
@@ -75,11 +75,11 @@ const CurrentDays = styled.h4`
     padding-bottom: 2px;
 `
 
-const Record = styled.h4`
+const Highest = styled.span`
     font-family: 'Lexend Deca', sans-serif;
     font-weight: 400;
     font-size: 13px;
-    color: ${({ record, current }) => (record === current && current > 0) ? '#8FC549' : '#666666' };
+    color: ${({ highest, current }) => (highest === current && current > 0) ? '#8FC549' : '#666666' };
     padding-bottom: 2px;
 `
 
@@ -104,7 +104,7 @@ export {
     HabitName,
     Text,
     CurrentDays,
-    Record,
+    Highest,
     Subtitle,
     Check
 }
