@@ -1,4 +1,4 @@
-import { Container, Body, Date, Habits, Habit, HabitName, Subtitle, Text, Check }from './style';
+import { Container, Body, Date, Habits, Habit, HabitName, Subtitle, Text, Check, Load }from './style';
 import { useState, useEffect, useContext } from 'react';
 import PercentageContext from '../../contexts/PercentageContext';
 import UserContext from '../../contexts/UserContext';
@@ -64,7 +64,11 @@ export default function Today() {
     }
 
     if(dayHabits.length === 0){
-        return <Loading color={'#52B6FF'}/>
+        return (
+            <Load>
+                <Loading color={'#52B6FF'}/>
+            </Load>
+        );
     }
 
     return (
