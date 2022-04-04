@@ -1,4 +1,4 @@
-import { Container, Body, Date, Habits, Habit, HabitName, Subtitle, Text, Check, Load }from './style';
+import { Container, Body, Date, Habits, Habit, HabitName, Subtitle, Text, CurrentDays, Record, Check }from './style';
 import { useState, useEffect, useContext } from 'react';
 import PercentageContext from '../../contexts/PercentageContext';
 import UserContext from '../../contexts/UserContext';
@@ -8,7 +8,6 @@ import Menu from '../Menu';
 import Header from '../Header';
 import check from '../../assets/check.png';
 import api from '../../services/api';
-import Loading from '../Loading';
 
 export default function Today() {
     let date = dayjs().locale('pt-br').format('dddd, DD/MM');
@@ -17,7 +16,7 @@ export default function Today() {
     const { token } = useContext(UserContext);
 
     const [dayHabits, setdayHabits] = useState([]);
-    const [doneNumber, setDoneNumber] = useState([]);
+    const [doneNumber, setDoneNumber] = useState(0);
 
     useEffect(() => loadHabits(), []); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -28,8 +27,10 @@ export default function Today() {
         promise.then(response => {
             setdayHabits(response.data);  
 
-            setDoneNumber(dayHabits.filter(habit => habit.done));
-            updateProgressBar(doneNumber.length, dayHabits.length);
+            const doneHabits = response.data.filter(habit => habit.done);
+            
+            setDoneNumber(doneHabits.length);
+            updateProgressBar(doneHabits.length, response.data.length);
         });
 
         promise.catch(error => console.log(error));
@@ -63,22 +64,14 @@ export default function Today() {
 
     }
 
-    if(dayHabits.length === 0){
-        return (
-            <Load>
-                <Loading color={'#52B6FF'}/>
-            </Load>
-        );
-    }
-
     return (
         <Container>
             <Header/>
             <Body>
                 <Date>{date}</Date>
 
-                <Subtitle done={doneNumber.length}>
-                    {doneNumber.length  === 0 ? 
+                <Subtitle done={doneNumber}>
+                    {doneNumber  === 0 ? 
                     'Nenhum hábito concluído ainda' : 
                     `${progressBar.toFixed(0)}% dos hábitos concluídos`}
                 </Subtitle>
@@ -88,8 +81,10 @@ export default function Today() {
                 <Habits key={id}>
                     <Habit>
                         <HabitName>{name}</HabitName>
-                        <Text>Sequência atual: {currentSequence} dias</Text>
-                        <Text>Seu recorde: {highestSequence} dias</Text>
+                        <Text>Sequência atual: </Text>
+                        <CurrentDays current={currentSequence}>{currentSequence} dias</CurrentDays>
+                        <Text>Seu recorde:</Text>
+                        <Record current={currentSequence} record={highestSequence}>{highestSequence} dias</Record>
                     </Habit>
                     <Check 
                         done={done}

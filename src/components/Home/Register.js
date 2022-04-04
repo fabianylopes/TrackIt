@@ -1,39 +1,32 @@
 import { Container, Form, Input, Button, StyledLink } from '../Home/style';
-import { useContext } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router';
-import UserContext from '../../contexts/UserContext';
-import Loading from '../Loading';
+import Loader from 'react-loader-spinner';
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import Logo from '../../assets/logo.png';
 import api from '../../services/api';
 
 export default function Register() {
     const navigate = useNavigate();
-       
-    const { userInfo, setUserInfo, loading, setLoading } = useContext(UserContext);
+
+    const [formInfo, setFormInfo] = useState({});
+    const [loading, setLoading] = useState(false);
 
     function handleRegister(e){
         e.preventDefault();
         setLoading(true);
 
-        const body = 
-        {
-            email: userInfo.email,
-            name: userInfo.name,
-            image: userInfo.image,
-            password: userInfo.password
-        }
+        api.register(formInfo).then(handleSuccess).catch(handleFailure);
+    }
 
-        const promise = api.register(body);
-
-        promise.then(() => navigate('/'));
-        promise.catch(handleFailure);
+    function handleSuccess(){
+        navigate('/')
+        setLoading(false);
     }
 
     function handleFailure(error){
-        setLoading(false);
-        alert(`${error.response.data.message}!
-        Preencha os campos corretamente!`);
-        setUserInfo({});
+        alert(`${error.response.data.message}!\nPreencha os campos corretamente!`);
+        setFormInfo({});
     }
 
     return (
@@ -45,8 +38,8 @@ export default function Register() {
                     placeholder="email" 
                     disabled={loading} 
                     handleLoading={loading}
-                    value={userInfo.email || ''} 
-                    onChange={e => setUserInfo({...userInfo, email: e.target.value})} 
+                    value={formInfo.email || ''} 
+                    onChange={e => setFormInfo({...formInfo, email: e.target.value})} 
                     required
                 >
                 </Input>
@@ -56,8 +49,8 @@ export default function Register() {
                     placeholder="senha" 
                     disabled={loading} 
                     handleLoading={loading}
-                    value={userInfo.password || ''} 
-                    onChange={e => setUserInfo({...userInfo, password: e.target.value})} 
+                    value={formInfo.password || ''} 
+                    onChange={e => setFormInfo({...formInfo, password: e.target.value})} 
                     required
                 >
                 </Input>
@@ -67,8 +60,8 @@ export default function Register() {
                     placeholder="nome" 
                     disabled={loading} 
                     handleLoading={loading}
-                    value={userInfo.name || ''} 
-                    onChange={e => setUserInfo({...userInfo, name: e.target.value})} 
+                    value={formInfo.name || ''} 
+                    onChange={e => setFormInfo({...formInfo, name: e.target.value})} 
                     required
                     >
                 </Input>
@@ -78,8 +71,8 @@ export default function Register() {
                     placeholder="foto" 
                     disabled={loading} 
                     handleLoading={loading}
-                    value={userInfo.image || ''} 
-                    onChange={e => setUserInfo({...userInfo, image: e.target.value})} 
+                    value={formInfo.image || ''} 
+                    onChange={e => setFormInfo({...formInfo, image: e.target.value})} 
                     required
                     >
                 </Input>
@@ -89,7 +82,7 @@ export default function Register() {
                     disabled={loading} 
                     handleLoading={loading}
                 >
-                    {loading ? <Loading color={'#fff'}/> : 'Cadastrar'}
+                    {loading ? <Loader type="ThreeDots" color="#fff" height={50} width={50} /> : 'Cadastrar'}
                 </Button>
             </Form>
             <StyledLink to="/">Já tem uma conta? Faça login!</StyledLink>

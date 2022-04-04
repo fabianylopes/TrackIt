@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const Container = styled.div`
     width: 375px;
-    height: 100vh;
+    min-height: 100vh;
     padding-top: 70px;
     padding-bottom: 70px;
     background-color: #E5E5E5;
@@ -15,9 +15,9 @@ const Container = styled.div`
 
 const Body = styled.div`
     width: 375px;
-    height: 100vh;
+    min-height: 100vh;
     background-color: #E5E5E5;
-    padding-top: 98px;
+    padding-top: 70px;
     padding-bottom: 70px;
     padding-left: 17px;
     padding-right: 18px;

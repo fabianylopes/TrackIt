@@ -11,16 +11,15 @@ import Register from './components/Home/Register';
 export default function App() {
 
   const initialToken = localStorage.getItem('token');
-  //const initialUserInfo = localStorage.getItem('userInfo');
+  const initialUserInfo = localStorage.getItem('userInfo');
 
   const [token, setToken] = useState(initialToken);
-  const [userInfo, setUserInfo] = useState({});
+  const [userInfo, setUserInfo] = useState(JSON.parse(initialUserInfo));
 
-  const [loading, setLoading] = useState(false);
-  const [progressBar, setProgressBar] = useState('');
+  const [progressBar, setProgressBar] = useState(0);
 
   return (
-    <UserContext.Provider value={{ token, setToken, userInfo, setUserInfo, loading, setLoading }}>  
+    <UserContext.Provider value={{ token, setToken, userInfo, setUserInfo }}>  
       <PercentageContext.Provider value={{ progressBar, setProgressBar}}>
         <BrowserRouter>
             <Routes>

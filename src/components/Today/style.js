@@ -29,6 +29,7 @@ const Habits = styled.div`
     height: 94px;
     background-color: #fff;
     border-radius: 5px;
+    padding-left: 15px;
     padding-right: 13px;
     margin-bottom: 10px;
 
@@ -38,7 +39,8 @@ const Habits = styled.div`
 `
 
 const Habit = styled.div`
-    padding-left: 15px;
+    
+    
 `
 
 const HabitName = styled.p`
@@ -65,6 +67,22 @@ const Text = styled.p`
     padding-bottom: 2px;
 `
 
+const CurrentDays = styled.h4`
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 400;
+    font-size: 13px;
+    color: ${({ current }) => current === 0 ? '#666666' : '#8FC549' };
+    padding-bottom: 2px;
+`
+
+const Record = styled.h4`
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 400;
+    font-size: 13px;
+    color: ${({ record, current }) => (record === current && current > 0) ? '#8FC549' : '#666666' };
+    padding-bottom: 2px;
+`
+
 const Check = styled.button`
     width: 70px;
     height: 70px;
@@ -77,12 +95,6 @@ const Check = styled.button`
     cursor: pointer;
 `
 
-const Load = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-`
-
 export {
     Container,
     Body,
@@ -91,7 +103,8 @@ export {
     Habit,
     HabitName,
     Text,
+    CurrentDays,
+    Record,
     Subtitle,
-    Check,
-    Load
+    Check
 }

@@ -1,21 +1,24 @@
 import { NewHabit, Input, Cancel, Save, CreateHabit, Week, WeekDay } from './style';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
+import Loader from 'react-loader-spinner';
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import UserContext from '../../contexts/UserContext';
-import Loading from '../Loading';
 import api from '../../services/api';
 
 export default function AddHabit({ weekDays, setOpenForm }){
     
-    const { token, loading, setLoading } = useContext(UserContext);
-        
-    setLoading(false);
+    const { token } = useContext(UserContext);
 
     const [habitName, setHabitName] = useState('');
     const [selectedDays, setSelectedDays] = useState([]);
+    const [loading, setLoading] = useState(false);
     
+    useEffect(() => {
+        return () => {
+        }
+      }, []);
+
     function selectDay(day){     
-        
-        console.log('hello there');
 
         if(selectedDays.includes(day)){
             setSelectedDays(selectedDays.filter(f => f === day ? false : true));
@@ -26,7 +29,7 @@ export default function AddHabit({ weekDays, setOpenForm }){
 
     const body = {name: habitName, days: selectedDays}
 
-    function handleHabit(){
+    function createHabit(){
         setLoading(true);
 
         const promise = api.addHabit(body, token);
@@ -48,7 +51,7 @@ export default function AddHabit({ weekDays, setOpenForm }){
     }
 
     return (
-        <NewHabit>
+        <NewHabit onSubmit={event => event.preventDefault()}>
             <Input 
                 type="text" 
                 placeholder="nome do hábito" 
@@ -85,8 +88,9 @@ export default function AddHabit({ weekDays, setOpenForm }){
                 <Save 
                     handleLoading={loading} 
                     disabled={loading}
-                    onClick={handleHabit}>
-                    {loading ? <Loading color={'#fff'}/> : 'Salvar'}                  
+                    onClick={createHabit}
+                >
+                    {loading ? <Loader type="ThreeDots" color="#fff" height={50} width={50} /> : 'Salvar'}         
                 </Save>
             </CreateHabit>
         </NewHabit>  

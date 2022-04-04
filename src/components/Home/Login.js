@@ -1,36 +1,33 @@
 import { Container, Form, Input, Button, StyledLink } from '../Home/style';
-import { useEffect, useContext} from 'react';
+import { useState, useEffect, useContext} from 'react';
 import { useNavigate } from 'react-router';
+import Loader from 'react-loader-spinner';
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import UserContext from '../../contexts/UserContext';
-import Loading from '../Loading';
 import Logo from '../../assets/logo.png';
 import api from '../../services/api';
 
 export default function Login() {
   const navigate = useNavigate();
 
-  const { token, setToken, userInfo, setUserInfo, loading, setLoading } = useContext(UserContext);
+  const { token, setToken, setUserInfo } = useContext(UserContext);
+
+  const [formInfo, setFormInfo] = useState({});
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if(token){
       navigate('/today');
     }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [token]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const body = {
-    email: userInfo.email,
-    password: userInfo.password
-  }
-
+  
   function handleLogin(e){
     e.preventDefault();
     setLoading(true);
+
+    api.login(formInfo).then(handleSuccess).catch(handleFailure);
     
-    const promise = api.login(body);
-
-    promise.then(handleSuccess);
-    promise.catch(handleFailure);
-
   }
 
   function handleSuccess(response){
@@ -38,16 +35,14 @@ export default function Login() {
     setUserInfo(response.data);
    
     localStorage.setItem('token', response.data.token);
-    //localStorage.setItem('userInfo', JSON.stringify(response.data));
+    localStorage.setItem('userInfo', JSON.stringify(response.data));
 
-    //navigate('/today');
   }
   
   function handleFailure(error){
     setLoading(false);
-    alert(`${error.response.data.message}!
-    Preencha os campos corretamente!`);
-    setUserInfo({});
+    alert(`${error.response.data.message}!\nPreencha os campos corretamente!`);
+    setFormInfo({});
   }
 
   return (
@@ -60,8 +55,8 @@ export default function Login() {
             placeholder="email" 
             disabled={loading} 
             handleLoading={loading}
-            value={userInfo.email || ''}
-            onChange={e => setUserInfo({...userInfo, email: e.target.value})}
+            value={formInfo.email || ''}
+            onChange={e => setFormInfo({...formInfo, email: e.target.value})}
             required
           >
           </Input>
@@ -71,8 +66,8 @@ export default function Login() {
             placeholder="senha" 
             disabled={loading} 
             handleLoading={loading}
-            value={userInfo.password || ''} 
-            onChange={e => setUserInfo({...userInfo, password: e.target.value})}
+            value={formInfo.password || ''} 
+            onChange={e => setFormInfo({...formInfo, password: e.target.value})}
             required
             >          
           </Input>
@@ -82,7 +77,7 @@ export default function Login() {
             disabled={loading} 
             handleLoading={loading}  
           >
-            {loading ? <Loading color={'#fff'}/> : 'Entrar'}
+            {loading ? <Loader type="ThreeDots" color="#fff" height={50} width={50} /> : 'Entrar'}
           </Button>
 
       </Form>
