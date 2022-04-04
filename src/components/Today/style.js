@@ -77,6 +77,12 @@ const Check = styled.button`
     cursor: pointer;
 `
 
+const Load = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
+
 export {
     Container,
     Body,
@@ -86,5 +92,6 @@ export {
     HabitName,
     Text,
     Subtitle,
-    Check
+    Check,
+    Load
 }
