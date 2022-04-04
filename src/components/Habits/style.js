@@ -3,7 +3,7 @@ import styled from "styled-components";
 const Container = styled.div`
     width: 375px;
     min-height: 100vh;
-    padding-top: 70px;
+    padding-top: 98px;
     padding-bottom: 70px;
     background-color: #E5E5E5;
 
@@ -17,7 +17,6 @@ const Body = styled.div`
     width: 375px;
     min-height: 100vh;
     background-color: #E5E5E5;
-    padding-top: 70px;
     padding-bottom: 70px;
     padding-left: 17px;
     padding-right: 18px;
@@ -53,7 +52,7 @@ const Plus = styled.button`
     cursor: pointer;    
 `
 
-const NewHabit = styled.form`
+const NewHabit = styled.div`
     width: 340px;
     height: 180px;
     background-color: #fff;
@@ -87,9 +86,9 @@ const Cancel = styled.button`
     height: 20px;
     border: none;
     font-size: 16px;
-    cursor: pointer;
     margin-right: 23px;
     opacity: ${({handleLoading}) => handleLoading ? 0.7 : 1};
+    cursor: pointer;
 `
 const Save = styled.button`
     font-family: 'Lexend Deca', sans-serif;
@@ -101,8 +100,8 @@ const Save = styled.button`
     border-radius: 4px;
     font-size: 16px;
     text-align: center;
-    cursor: pointer;
     opacity: ${({handleLoading}) => handleLoading ? 0.7 : 1};
+    cursor: pointer;
 `
 
 const CreateHabit = styled.div`

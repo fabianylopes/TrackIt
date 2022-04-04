@@ -9,7 +9,7 @@ const Container = styled.div`
 
 const Body = styled.div`
     width: 375px;
-    height: 100vh;
+    min-height: 100vh;
     background-color: #E5E5E5;
     padding-top: 98px;
     padding-bottom: 70px;

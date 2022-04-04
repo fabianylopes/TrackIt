@@ -21,7 +21,6 @@ export default function Login() {
     }
   }, [token]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  
   function handleLogin(e){
     e.preventDefault();
     setLoading(true);
@@ -36,7 +35,6 @@ export default function Login() {
    
     localStorage.setItem('token', response.data.token);
     localStorage.setItem('userInfo', JSON.stringify(response.data));
-
   }
   
   function handleFailure(error){
@@ -85,4 +83,3 @@ export default function Login() {
     </Container>
   );
 }
-
