@@ -5,7 +5,7 @@ import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import UserContext from '../../contexts/UserContext';
 import api from '../../services/api';
 
-export default function AddHabit({ weekDays, setOpenForm }){
+export default function AddHabit({ weekDays, setOpenForm, loadHabits }){
     
     const { token } = useContext(UserContext);
 
@@ -42,6 +42,7 @@ export default function AddHabit({ weekDays, setOpenForm }){
         setOpenForm(false)
         setHabitName('');
         setSelectedDays([]);
+        loadHabits();
     }
 
     function handleFailure(error){
@@ -51,7 +52,7 @@ export default function AddHabit({ weekDays, setOpenForm }){
     }
 
     return (
-        <NewHabit onSubmit={event => event.preventDefault()}>
+        <NewHabit onSubmit={e => e.preventDefault()}>
             <Input 
                 type="text" 
                 placeholder="nome do hábito" 
