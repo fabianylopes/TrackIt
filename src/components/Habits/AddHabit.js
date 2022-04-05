@@ -1,6 +1,6 @@
 import { NewHabit, Input, Cancel, Save, CreateHabit, Week, WeekDay } from './style';
 import { useState, useContext, useEffect } from 'react';
-import Loader from 'react-loader-spinner';
+import * as Loader from "react-loader-spinner";
 import UserContext from '../../contexts/UserContext';
 import api from '../../services/api';
 
