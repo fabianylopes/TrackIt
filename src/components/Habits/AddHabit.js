@@ -1,7 +1,6 @@
 import { NewHabit, Input, Cancel, Save, CreateHabit, Week, WeekDay } from './style';
 import { useState, useContext, useEffect } from 'react';
 import Loader from 'react-loader-spinner';
-import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import UserContext from '../../contexts/UserContext';
 import api from '../../services/api';
 
@@ -82,7 +81,8 @@ export default function AddHabit({ weekDays, setOpenForm, loadHabits }){
                     type="button"
                     handleLoading={loading} 
                     disabled={loading}
-                    onClick={() => setOpenForm(false)}>
+                    onClick={() => setOpenForm(false)}
+                >
                     Cancelar
                 </Cancel>
 

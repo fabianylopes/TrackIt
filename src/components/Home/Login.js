@@ -2,7 +2,6 @@ import { Container, Form, Input, Button, StyledLink } from '../Home/style';
 import { useState, useEffect, useContext} from 'react';
 import { useNavigate } from 'react-router';
 import Loader from 'react-loader-spinner';
-import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import UserContext from '../../contexts/UserContext';
 import Logo from '../../assets/logo.png';
 import api from '../../services/api';
