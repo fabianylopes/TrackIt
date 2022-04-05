@@ -81,7 +81,7 @@ export default function Register() {
                     disabled={loading} 
                     handleLoading={loading}
                 >
-                    {loading ? <Loader type="ThreeDots" color="#fff" height={50} width={50} /> : 'Cadastrar'}
+                    {loading ? <Loader type="ThreeDots" color="#ffffff" height={50} width={50} /> : 'Cadastrar'}
                 </Button>
             </Form>
             <StyledLink to="/">Já tem uma conta? Faça login!</StyledLink>

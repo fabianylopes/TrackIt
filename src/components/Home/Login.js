@@ -74,7 +74,7 @@ export default function Login() {
             disabled={loading} 
             handleLoading={loading}  
           >
-            {loading ? <Loader type="ThreeDots" color="#fff" height={50} width={50} /> : 'Entrar'}
+            {loading ? <Loader type="ThreeDots" color="#ffffff" height={50} width={50} /> : 'Entrar'}
           </Button>
 
       </Form>

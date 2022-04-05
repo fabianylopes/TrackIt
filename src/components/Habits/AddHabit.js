@@ -91,7 +91,7 @@ export default function AddHabit({ weekDays, setOpenForm, loadHabits }){
                     disabled={loading}
                     onClick={createHabit}
                 >
-                    {loading ? <Loader type="ThreeDots" color="#fff" height={50} width={50} /> : 'Salvar'}         
+                    {loading ? <Loader type="ThreeDots" color="#ffffff" height={50} width={50}/> : 'Salvar'}         
                 </Save>
             </CreateHabit>
         </NewHabit>  
