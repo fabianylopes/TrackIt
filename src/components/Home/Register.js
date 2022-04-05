@@ -1,7 +1,7 @@
 import { Container, Form, Input, Button, StyledLink } from '../Home/style';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
-import * as Loader from "react-loader-spinner";
+import Loader from "react-loader-spinner";
 import Logo from '../../assets/logo.png';
 import api from '../../services/api';
 
